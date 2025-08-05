@@ -9,12 +9,17 @@
 }
 html, body {
     height: 100%;
+    min-width: 800px; 
+    min-height: 600px;
 }
-
 #page {
     height:100%;
     display: flex;
     flex-direction: column;
+}
+
+.fa{
+    color: black;
 }
 
 #header,#footer{
@@ -33,7 +38,7 @@ html, body {
 
 
 #searchBar{
-    margin-top: 80px;
+    margin-top: 1vh;
     justify-self: center;
     align-content: flex-start;
     display: flex;
@@ -46,13 +51,12 @@ html, body {
 }
 
 #searchBar input[type=text] {
-  float: right;
-  padding: 6px;
-  border: none;
-  width: 100%;
-  color: black;
-  font-size: 2rem;
-  border-radius: 10px 0px 0px 10px;
+    float: right;
+    border: none;
+    width: 100%;
+    color: black;
+    font-size: 2rem;
+    border-radius: 10px 0px 0px 10px;
 }
 #searchBar button {
     float: left;
@@ -85,7 +89,115 @@ html, body {
 }
 
 .result{
+    position: relative;
+    display: flex;
+    flex-direction: row;
     grid-column: 0;
     grid-row: 0;
-    background-color: red;
+    background-color: #5D5D5D;
+    border-radius: 20px;
+    background-image: '';
+    justify-content: end;
+    overflow: hidden;
+}
+.resultDescription{
+    background-color: #AFAFAF;
+    opacity: .9;
+    border-radius: 20px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    z-index: 1;
+}
+.resultDescription,
+.resultExtra {
+    position: relative;
+    transition: all 0.3s ease;
+}
+.resultExtra{
+    display: flex;
+    flex-direction: column;
+    background-color: #AFAFAF;
+    opacity: 1;
+    padding: 10px 5px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    
+    width: 0%; 
+    z-index: 2;
+    transition: all 0.3s ease-in;
+    opacity: 0;
+}
+/* Hover effect: expand to overlap ~30% of resultDescription */
+.result:hover .resultExtra {
+    width: 20%; 
+    opacity: 1;
+    /* initial 20% + 30% of description's 60% width */
+}
+.resultLikes, .resultTags{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
+
+    padding: 8px;
+    border-radius: 12px;
+    background-color: #D9D9D9;
+}
+
+.resultExtra button {
+    float: right;
+    border: none;
+    width: auto;
+    color: black;
+    font-size: clamp(10px,50vw,24px);
+    border-radius: 10px;
+    padding: 10px;
+}
+/* Tooltip hidden by default */
+.resultTags .tooltip {
+    position: absolute;
+    top: 10px;     
+    right: -30px;        
+    transform: translateY(-100%);
+    
+    background: rgba(50, 50, 50, 0.9);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.resultTags .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; 
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(50, 50, 50, 0.9) transparent transparent transparent;
+}
+
+.resultTags:hover .tooltip {
+    opacity: 1;
+    transform: translateY(-110%);
+}
+.fa, .resultTags{
+  cursor: pointer;
 }
