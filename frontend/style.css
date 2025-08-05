@@ -1,7 +1,15 @@
+
+@font-face {
+    font-family: 'Digital-Disco';
+    src: url('assets/fonts/DigitalDisco-Thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *{
     margin: 0;
     padding: 0;
-    font-family: Inter, sans-serif;
+    font-family: 'Digital-Disco';
     color: #F5F5F5;
 }
 :root {
@@ -48,6 +56,7 @@ html, body {
     border: 5px solid #5D5D5D;
     border-radius: 10px;
     padding: 0px 15px 0px 15px;
+    box-shadow: 5px 0px 10px black;
 }
 
 #searchBar input[type=text] {
@@ -96,9 +105,12 @@ html, body {
     grid-row: 0;
     background-color: #5D5D5D;
     border-radius: 20px;
-    background-image: '';
     justify-content: end;
     overflow: hidden;
+    background-image: url('assets/textures/default.png');
+    box-shadow: 5px 5px 10px black;
+    min-height: 150px;
+    min-width: 250px;
 }
 .resultDescription{
     background-color: #AFAFAF;
@@ -109,6 +121,9 @@ html, body {
     flex-direction: column;
     width: 60%;
     z-index: 1;
+}
+.resultDescription p, .resultDescription h1,.resultDescription h2{
+    color: black;
 }
 .resultDescription,
 .resultExtra {
@@ -134,12 +149,11 @@ html, body {
     z-index: 2;
     transition: all 0.3s ease-in;
     opacity: 0;
+    gap: 5px;
 }
-/* Hover effect: expand to overlap ~30% of resultDescription */
 .result:hover .resultExtra {
     width: 20%; 
     opacity: 1;
-    /* initial 20% + 30% of description's 60% width */
 }
 .resultLikes, .resultTags{
     position: relative;
@@ -149,7 +163,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1%;
+    gap: 10px;
 
     padding: 8px;
     border-radius: 12px;
@@ -161,11 +175,14 @@ html, body {
     border: none;
     width: auto;
     color: black;
-    font-size: clamp(10px,50vw,24px);
+    font-size: clamp(10px,5vw,48px);
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
 }
-/* Tooltip hidden by default */
+.resultExtra p{
+    color: black;
+}
+
 .resultTags .tooltip {
     position: absolute;
     top: 10px;     
