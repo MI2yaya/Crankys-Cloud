@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card, { type Props as CardProps } from '../components/Card.astro';
+
+const cards: CardProps[] = Array(10).fill(0).map((_, i) => ({
+	id: i.toString(),
+	title: "Title" + Math.round(Math.random() * 1000),
+	author: "Author",
+	mapper: "Mapper",
+	image: `/textures/default.png`
+}))
+---
+
+<BaseLayout>
+	<header>
+		<h1>Cranky's Cloud</h1>
+	</header>
+	<main>
+		<input id="search" type="text" placeholder="Search...">
+		<div class="levelsContainer">
+			<div id="levels">
+				{cards.map(card => (<Card {...card} />))}
+			</div>
+		</div>
+	</main>
+	<footer>
+		<p>See the <a href="https://github.com/MI2yaya/Crankys-Cloud">source code</a>.</p>
+	</footer>
+</BaseLayout>
+
+<style lang="scss">
+	header {
+		width: 100%;
+		flex-grow: 0;
+		text-align: center;
+		padding: 6px;
+		background-color: rgb(219, 219, 219);
+		margin-bottom: 1rem;
+	}
+
+	footer {
+		margin-top: 1rem;
+		background-color: rgb(219, 219, 219);
+		padding: 6px;
+	}
+
+	main {
+		margin: auto;
+		flex-grow: 1;
+
+		// I want to preserve the semantic `main` here, so we're nesting into flex
+		// again for `.levelsContainer` to take only the remaining height
+		display: flex;
+		flex-direction: column;
+
+		input {
+			width: 100%;
+			margin-bottom: 1rem;
+
+			border: 2px solid black;
+			padding: 6px;
+		}
+	}
+
+	.levelsContainer {
+		border: 2px solid black;
+		border-bottom: none;
+		flex: 1;
+	}
+
+	#levels {
+		width: 100%;
+		display: grid;
+		grid-template-columns: auto auto;
+
+		overflow-y: scroll;
+		max-height: 100%;
+
+		// To create the impression of a 2px border between elements
+		gap: 2px;
+		background-color: black;
+		border-bottom: 2px solid black;
+	}
+</style>

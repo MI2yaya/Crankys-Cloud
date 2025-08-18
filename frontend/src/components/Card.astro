@@ -1,0 +1,94 @@
+---
+import PixelarticonsDownload from '~icons/pixelarticons/download';
+import PixelarticonsArrowUp from '~icons/pixelarticons/arrow-up';
+import PixelarticonsArrowDown from '~icons/pixelarticons/arrow-down';
+
+export interface Props {
+  title: string;
+  author: string;
+  mapper: string;
+  image: string;
+  id: string;
+}
+
+const { title, author, mapper, image, id } = Astro.props;
+---
+
+<div data-id={id} class="card" style={`background: no-repeat 100%/100% url(${image}), white`}>
+    <!-- We use this to quickly move the element to the right w/ flex. -->
+    <div></div>
+    <div class="content">
+        <div class="contentInner">
+            <h2>{title}</h2>
+            <p>by: {author}</p>
+            <p>mapper: {mapper}</p>
+            <p>Difficulty</p>
+        </div>
+        <div class="actions">
+            <button><PixelarticonsArrowUp width="24px" height="24px"></button>
+            <span class="score">0</span>
+            <button><PixelarticonsArrowDown width="24px" height="24px"></button>
+            <div class="sep"></div>
+            <button><PixelarticonsDownload width="24px" height="24px"></button>
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    div.card {
+        // The 2x1 image
+        width: 480px;
+        height: 240px;
+
+        background-size: cover;
+
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    div.content {
+        text-align: right;
+        width: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .contentInner {
+            padding: 6px;
+        }
+
+        .actions {
+            width: 100%;
+            background-color: white;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+
+            .sep {
+                width: 8px;
+            }
+
+            .score {
+                font-size: 24px;
+            }
+
+            button {
+                background: none;
+                border: none;
+                padding: 0;
+
+                width: 24px;
+                height: 24px;
+
+                cursor: pointer;
+            }
+        }
+    }
+</style>
