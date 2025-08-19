@@ -5,19 +5,22 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "preview": "wrangler dev"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.4",
-    "@astrojs/db": "^0.17.1",
     "@auth/core": "^0.37.4",
     "astro": "^5.13.2",
     "auth-astro": "^4.2.0",
+    "drizzle-orm": "^0.44.4",
     "sass": "^1.90.0"
   },
   "devDependencies": {
     "@iconify-json/pixelarticons": "^1.2.2",
-    "unplugin-icons": "^22.2.0"
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.4",
+    "unplugin-icons": "^22.2.0",
+    "wrangler": "^4.31.0"
   }
 }
