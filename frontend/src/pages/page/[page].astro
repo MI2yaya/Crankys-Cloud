@@ -16,7 +16,8 @@ export const getStaticPaths = (({ paginate }) => {
 		title: "Title" + Math.round(Math.random() * 1000),
 		author: "Author",
 		mapper: "Mapper",
-		image: `/textures/default.png`
+		image: `/textures/default.png`,
+		score: 0
 	}))
 
 	return paginate(cards, { pageSize: 10 });
