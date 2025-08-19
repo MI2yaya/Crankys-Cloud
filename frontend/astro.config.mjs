@@ -4,6 +4,8 @@ import Icons from 'unplugin-icons/vite'
 import auth from 'auth-astro';
 import cloudflare from '@astrojs/cloudflare';
 
+import db from '@astrojs/db';
+
 // https://astro.build/config
 export default defineConfig({
     vite: {
@@ -15,6 +17,6 @@ export default defineConfig({
     },
     output: 'server',
 
-    integrations: [auth()],
+    integrations: [auth(), db()],
     adapter: cloudflare(),
 })
