@@ -1,14 +1,29 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Card, { type Props as CardProps } from '../components/Card.astro';
+import type {
+  InferGetStaticParamsType,
+  InferGetStaticPropsType,
+  GetStaticPaths,
+} from "astro";
 
-const cards: CardProps[] = Array(10).fill(0).map((_, i) => ({
-	id: i.toString(),
-	title: "Title" + Math.round(Math.random() * 1000),
-	author: "Author",
-	mapper: "Mapper",
-	image: `/textures/default.png`
-}))
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card, { type Props as CardProps } from '../../components/Card.astro';
+
+export const getStaticPaths = (({ paginate }) => {
+	const cards: CardProps[] = Array(40).fill(0).map((_, i) => ({
+		id: i.toString(),
+		title: "Title" + Math.round(Math.random() * 1000),
+		author: "Author",
+		mapper: "Mapper",
+		image: `/textures/default.png`
+	}))
+
+	return paginate(cards, { pageSize: 10 });
+}) satisfies GetStaticPaths
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
 ---
 
 <BaseLayout>
@@ -19,8 +34,12 @@ const cards: CardProps[] = Array(10).fill(0).map((_, i) => ({
 		<input id="search" type="text" placeholder="Search...">
 		<div class="levelsContainer">
 			<div id="levels">
-				{cards.map(card => (<Card {...card} />))}
+				{page.data.map(card => (<Card {...card} />))}
 			</div>
+		</div>
+		<div class="navigation">
+			<a href={page.url.prev}>previous</a>
+			<a href={page.url.next}>next</a>
 		</div>
 	</main>
 	<footer>
@@ -59,6 +78,18 @@ const cards: CardProps[] = Array(10).fill(0).map((_, i) => ({
 
 			border: 2px solid black;
 			padding: 6px;
+		}
+	}
+
+	.navigation {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		font-size: 24px;
+		text-align: center;
+
+		a {
+			color: black;
+			cursor: pointer;
 		}
 	}
 
