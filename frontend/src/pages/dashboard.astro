@@ -4,6 +4,10 @@ import Header from "../components/Header.astro"
 import { getSession } from 'auth-astro/server';
 
 const session = await getSession(Astro.request);
+
+if (!session) {
+    return Astro.redirect("/login")
+}
 ---
 
 <BaseLayout>
