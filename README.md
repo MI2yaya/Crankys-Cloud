@@ -1,8 +1,10 @@
-# frontend
+# Cranky's Cloud
 
-A small astro app.
+A website for downloading and uploading songs for [Beatblock](https://store.steampowered.com/app/3045200/Beatblock/).
 
-## authentication
+## Development
+
+### Authentication
 
 We require the following environment variables:
 
