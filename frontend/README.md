@@ -1,3 +1,17 @@
 # frontend
 
 A small astro app.
+
+## authentication
+
+We require the following environment variables:
+
+```
+GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET
+AUTH_SECRET
+AUTH_TRUST_HOST=true # we're using Cloudflare which is trusted.
+```
+
+As per [authjs-astro's Setup environment variables docs](https://github.com/nowaythatworked/auth-astro?tab=readme-ov-file#setup-environment-variables),
+you can generate `AUTH_SECRET` via `openssl rand -hex 32`.
