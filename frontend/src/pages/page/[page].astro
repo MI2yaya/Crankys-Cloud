@@ -1,9 +1,11 @@
 ---
 import type {
-  InferGetStaticParamsType,
   InferGetStaticPropsType,
   GetStaticPaths,
 } from "astro";
+
+import PixelarticonsArrowLeft from '~icons/pixelarticons/arrow-left';
+import PixelarticonsArrowRight from '~icons/pixelarticons/arrow-right';
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card, { type Props as CardProps } from '../../components/Card.astro';
@@ -38,8 +40,14 @@ const { page } = Astro.props;
 			</div>
 		</div>
 		<div class="navigation">
-			<a href={page.url.prev}>previous</a>
-			<a href={page.url.next}>next</a>
+			<a href={page.url.prev}>
+				<PixelarticonsArrowLeft width="24px" height="24px" />
+				previous
+			</a>
+			<a href={page.url.next}>
+				next
+				<PixelarticonsArrowRight width="24px" height="24px" />
+			</a>
 		</div>
 	</main>
 	<footer>
@@ -86,10 +94,17 @@ const { page } = Astro.props;
 		margin-bottom: 1rem;
 		font-size: 24px;
 		text-align: center;
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
 
 		a {
 			color: black;
 			cursor: pointer;
+
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
 		}
 	}
 
