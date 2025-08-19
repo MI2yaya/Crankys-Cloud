@@ -1,76 +1,51 @@
 ---
-import type {
-  InferGetStaticPropsType,
-  GetStaticPaths,
-} from "astro";
-
 import PixelarticonsArrowLeft from '~icons/pixelarticons/arrow-left';
 import PixelarticonsArrowRight from '~icons/pixelarticons/arrow-right';
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card, { type Props as CardProps } from '../../components/Card.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Card from '../../components/Card.astro';
+import { getSession } from 'auth-astro/server';
+import { actions } from 'astro:actions';
 
-export const getStaticPaths = (({ paginate }) => {
-	const cards: CardProps[] = Array(40).fill(0).map((_, i) => ({
-		id: i.toString(),
-		title: "Title" + Math.round(Math.random() * 1000),
-		author: "Author",
-		mapper: "Mapper",
-		image: `/textures/default.png`,
-		score: 0
-	}))
+const session = await getSession(Astro.request);
 
-	return paginate(cards, { pageSize: 10 });
-}) satisfies GetStaticPaths
+const { page } = Astro.params;
+if (page === undefined) throw Error("A page number must be specified.") 
+const parsedPage = parseInt(page) // TODO: error handling
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { data, error } = await Astro.callAction(actions.getCards, ({ page: parsedPage }));
 
-// All paginated data is passed on the "page" prop
-const { page } = Astro.props;
+if (error) {
+	throw Error("!!!") // TODO
+}
 ---
 
 <BaseLayout>
-	<header>
-		<h1>Cranky's Cloud</h1>
-	</header>
+	<Header authenticated={!!session} />
 	<main>
 		<input id="search" type="text" placeholder="Search...">
 		<div class="levelsContainer">
 			<div id="levels">
-				{page.data.map(card => (<Card {...card} />))}
+				{data.map(card => (<Card {...card} />))}
 			</div>
 		</div>
 		<div class="navigation">
-			<a href={page.url.prev}>
+			<a href={parsedPage === 1 ? null : `/page/${parsedPage - 1}`}>
 				<PixelarticonsArrowLeft width="24px" height="24px" />
 				previous
 			</a>
-			<a href={page.url.next}>
+			<a href={`/page/`}>
 				next
 				<PixelarticonsArrowRight width="24px" height="24px" />
 			</a>
 		</div>
 	</main>
-	<footer>
-		<p>See the <a href="https://github.com/MI2yaya/Crankys-Cloud">source code</a>.</p>
-	</footer>
+	<Footer />
 </BaseLayout>
 
 <style lang="scss">
-	header {
-		width: 100%;
-		flex-grow: 0;
-		text-align: center;
-		padding: 6px;
-		background-color: rgb(219, 219, 219);
-		margin-bottom: 1rem;
-	}
-
-	footer {
-		margin-top: 1rem;
-		background-color: rgb(219, 219, 219);
-		padding: 6px;
-	}
 
 	main {
 		margin: auto;

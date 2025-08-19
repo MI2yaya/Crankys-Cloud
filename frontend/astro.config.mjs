@@ -13,6 +13,7 @@ export default defineConfig({
             }),
         ],
     },
+    output: 'server',
 
     integrations: [auth()],
     adapter: cloudflare(),

@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PixelarticonsGithub from '~icons/pixelarticons/github';
+import { getSession } from 'auth-astro/server';
+
+const session = await getSession(Astro.request);
+
+if (session) {
+    return Astro.redirect("/dashboard");
+}
+---
+
+<BaseLayout>
+    <div class="container">
+        <header>
+            <h1><a href="/">Cranky's Cloud</a></h1>
+        </header>
+        <main>
+            <button id="github">
+                <PixelarticonsGithub />
+                Sign in with GitHub
+            </button>
+            <button id="discord">
+                <!-- TODO: discord icon - pixelarticons does not have this. -->
+                Sign in with Discord
+            </button>
+        </main>
+    </div>
+</BaseLayout>
+
+<script>
+    import { signIn } from "auth-astro/client";
+    // TODO: discord auth
+    const githubLoginButton = document.querySelector("#github")!;
+
+    githubLoginButton.addEventListener("click", () => signIn("github"))
+</script>
+
+<style lang="scss">
+    .container {
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    header {
+        margin-bottom: 1rem;
+
+        a {
+            color: black;
+            cursor: pointer;
+        }
+    }
+
+    main {
+        max-width: 40ch;
+        min-width: 40ch;
+        border: 2px solid black;
+        padding: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        button {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            // TODO: this is such a bland design - can we do better?
+            border: 2px solid black;
+            background-color: white;
+            cursor: pointer;
+        }
+    }
+</style>
