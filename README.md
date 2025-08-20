@@ -12,6 +12,9 @@ We require the following environment variables:
 GITHUB_CLIENT_ID
 GITHUB_CLIENT_SECRET
 AUTH_SECRET
+CLOUDFLARE_ACCOUNT_ID
+CLOUDFLARE_DATABASE_ID
+CLOUDFLARE_D1_TOKEN
 AUTH_TRUST_HOST=true # we're using Cloudflare which is trusted.
 ```
 
