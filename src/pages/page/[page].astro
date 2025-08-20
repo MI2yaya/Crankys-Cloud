@@ -1,106 +1,107 @@
 ---
-import PixelarticonsArrowLeft from '~icons/pixelarticons/arrow-left';
-import PixelarticonsArrowRight from '~icons/pixelarticons/arrow-right';
+import PixelarticonsArrowLeft from "~icons/pixelarticons/arrow-left";
+import PixelarticonsArrowRight from "~icons/pixelarticons/arrow-right";
 
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import Card from '../../components/Card.astro';
-import { getSession } from 'auth-astro/server';
-import { actions } from 'astro:actions';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Card from "../../components/Card.astro";
+import { getSession } from "auth-astro/server";
+import { actions } from "astro:actions";
 
 const session = await getSession(Astro.request);
 
 const { page } = Astro.params;
-if (page === undefined) throw Error("A page number must be specified.") 
-const parsedPage = parseInt(page) // TODO: error handling
+if (page === undefined) throw Error("A page number must be specified.");
+const parsedPage = parseInt(page); // TODO: error handling
 
-const { data, error } = await Astro.callAction(actions.getCards, ({ page: parsedPage }));
+const { data, error } = await Astro.callAction(actions.getCards, {
+    page: parsedPage,
+});
 
 if (error) {
-	throw Error("!!!") // TODO
+    throw Error("!!!"); // TODO
 }
 ---
 
 <BaseLayout>
-	<Header authenticated={!!session} />
-	<main>
-		<input id="search" type="text" placeholder="Search...">
-		<div class="levelsContainer">
-			<div id="levels">
-				{data.map(card => (<Card {...card} />))}
-			</div>
-		</div>
-		<div class="navigation">
-			<a href={parsedPage === 1 ? null : `/page/${parsedPage - 1}`}>
-				<PixelarticonsArrowLeft width="24px" height="24px" />
-				previous
-			</a>
-			<a href={`/page/`}>
-				next
-				<PixelarticonsArrowRight width="24px" height="24px" />
-			</a>
-		</div>
-	</main>
-	<Footer />
+    <Header authenticated={!!session} />
+    <main>
+        <input id="search" type="text" placeholder="Search..." />
+        <div class="levelsContainer">
+            <div id="levels">
+                {data.map((card) => <Card {...card} />)}
+            </div>
+        </div>
+        <div class="navigation">
+            <a href={parsedPage === 1 ? null : `/page/${parsedPage - 1}`}>
+                <PixelarticonsArrowLeft width="24px" height="24px" />
+                previous
+            </a>
+            <a href={`/page/`}>
+                next
+                <PixelarticonsArrowRight width="24px" height="24px" />
+            </a>
+        </div>
+    </main>
+    <Footer />
 </BaseLayout>
 
 <style lang="scss">
+    main {
+        margin: auto;
+        flex-grow: 1;
 
-	main {
-		margin: auto;
-		flex-grow: 1;
+        // I want to preserve the semantic `main` here, so we're nesting into flex
+        // again for `.levelsContainer` to take only the remaining height
+        display: flex;
+        flex-direction: column;
 
-		// I want to preserve the semantic `main` here, so we're nesting into flex
-		// again for `.levelsContainer` to take only the remaining height
-		display: flex;
-		flex-direction: column;
+        input {
+            width: 100%;
+            margin-bottom: 1rem;
 
-		input {
-			width: 100%;
-			margin-bottom: 1rem;
+            border: 2px solid black;
+            padding: 6px;
+        }
+    }
 
-			border: 2px solid black;
-			padding: 6px;
-		}
-	}
+    .navigation {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 24px;
+        text-align: center;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
 
-	.navigation {
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-		font-size: 24px;
-		text-align: center;
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
+        a {
+            color: black;
+            cursor: pointer;
 
-		a {
-			color: black;
-			cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
 
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-		}
-	}
+    .levelsContainer {
+        border: 2px solid black;
+        border-bottom: none;
+        flex: 1;
+    }
 
-	.levelsContainer {
-		border: 2px solid black;
-		border-bottom: none;
-		flex: 1;
-	}
+    #levels {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto auto;
 
-	#levels {
-		width: 100%;
-		display: grid;
-		grid-template-columns: auto auto;
+        overflow-y: scroll;
+        max-height: 100%;
 
-		overflow-y: scroll;
-		max-height: 100%;
-
-		// To create the impression of a 2px border between elements
-		gap: 2px;
-		background-color: black;
-		border-bottom: 2px solid black;
-	}
+        // To create the impression of a 2px border between elements
+        gap: 2px;
+        background-color: black;
+        border-bottom: 2px solid black;
+    }
 </style>

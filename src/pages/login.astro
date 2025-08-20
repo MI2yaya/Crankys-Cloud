@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import PixelarticonsGithub from '~icons/pixelarticons/github';
-import { getSession } from 'auth-astro/server';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PixelarticonsGithub from "~icons/pixelarticons/github";
+import { getSession } from "auth-astro/server";
 
 const session = await getSession(Astro.request);
 
@@ -33,7 +33,7 @@ if (session) {
     // TODO: discord auth
     const githubLoginButton = document.querySelector("#github")!;
 
-    githubLoginButton.addEventListener("click", () => signIn("github"))
+    githubLoginButton.addEventListener("click", () => signIn("github"));
 </script>
 
 <style lang="scss">

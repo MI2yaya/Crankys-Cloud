@@ -1,15 +1,17 @@
-import { defineAction } from 'astro:actions';
-import { z } from 'astro:schema';
-import type { Props as CardProps } from '../components/Card.astro';
+import { defineAction } from "astro:actions";
+import { z } from "astro:schema";
+import type { Props as CardProps } from "../components/Card.astro";
 
-const cards: CardProps[] = Array(40).fill(0).map((_, i) => ({
-    id: i.toString(),
-    title: "Title" + Math.round(Math.random() * 1000),
-    author: "Author",
-    mapper: "Mapper",
-    image: `/textures/default.png`,
-    score: 0
-}));
+const cards: CardProps[] = Array(40)
+    .fill(0)
+    .map((_, i) => ({
+        id: i.toString(),
+        title: "Title" + Math.round(Math.random() * 1000),
+        author: "Author",
+        mapper: "Mapper",
+        image: `/textures/default.png`,
+        score: 0,
+    }));
 
 export const server = {
     getCards: defineAction({
@@ -18,7 +20,7 @@ export const server = {
             page: z.number().min(1),
         }),
         handler: async ({ page }) => {
-            return cards
-        }
-    })
-}
+            return cards;
+        },
+    }),
+};

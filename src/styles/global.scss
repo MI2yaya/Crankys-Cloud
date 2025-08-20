@@ -2,15 +2,15 @@
 // A pixel is two pixels.
 
 @font-face {
-    font-family: 'Digital-Disco';
-    src: url('/fonts/DigitalDisco-Thin.ttf') format('truetype');
+    font-family: "Digital-Disco";
+    src: url("/fonts/DigitalDisco-Thin.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 * {
     box-sizing: border-box;
-    font-family: 'Digital-Disco';
+    font-family: "Digital-Disco";
     font-weight: normal;
     margin: 0;
 
@@ -26,11 +26,14 @@ h2 {
     font-size: 36px;
 }
 
-input, p, button {
+input,
+p,
+button {
     font-size: 24px;
 }
 
-body, html {
+body,
+html {
     width: 100vw;
     height: 100vh;
     padding: 0;

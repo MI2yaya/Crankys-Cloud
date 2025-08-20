@@ -3,8 +3,7 @@ export interface Props {
     authenticated: boolean;
 }
 
-const { authenticated } = Astro.props
-
+const { authenticated } = Astro.props;
 ---
 
 <header>
@@ -12,18 +11,24 @@ const { authenticated } = Astro.props
     <div class="logo"></div>
     <h1><a href="/">Cranky's Cloud</a></h1>
     <div class="links">
-        {authenticated ? (
-            <a href="/dashboard">dashboard</a>
-            <button id="logout">logout</button>
-        ) : (<a href="/login">login</a>)}
+        {
+            authenticated ? (
+                <>
+                    <a href="/dashboard">dashboard</a>
+                    <button id="logout">logout</button>
+                </>
+            ) : (
+                <a href="/login">login</a>
+            )
+        }
     </div>
 </header>
 
 <script>
-    import { signOut } from "auth-astro/client"
+    import { signOut } from "auth-astro/client";
     const logoutButton = document.querySelector<HTMLButtonElement>("#logout")!;
 
-    logoutButton.addEventListener("click", () => signOut())
+    logoutButton.addEventListener("click", () => signOut());
 </script>
 
 <style lang="scss">
@@ -41,17 +46,17 @@ const { authenticated } = Astro.props
     }
 
     header {
-		width: 100%;
-		flex-grow: 0;
-		text-align: center;
-		padding: 6px;
-		background-color: rgb(219, 219, 219);
-		margin-bottom: 1rem;
+        width: 100%;
+        flex-grow: 0;
+        text-align: center;
+        padding: 6px;
+        background-color: rgb(219, 219, 219);
+        margin-bottom: 1rem;
 
         display: flex;
         justify-content: space-between;
         align-items: center;
-	}
+    }
 
     .logo {
         margin-left: 2rem;
@@ -63,7 +68,9 @@ const { authenticated } = Astro.props
         text-align: right;
     }
 
-    .logo, h1, .links {
+    .logo,
+    h1,
+    .links {
         flex: 1;
     }
 </style>
