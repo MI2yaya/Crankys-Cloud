@@ -1,8 +1,8 @@
 {
     "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "my-astro-app",
+    "name": "crankys-cloud",
     "main": "./dist/_worker.js/index.js",
-    "compatibility_date": "2025-08-18",
+    "compatibility_date": "2025-08-20",
     "compatibility_flags": ["nodejs_compat"],
     "assets": {
         "binding": "ASSETS",
@@ -11,4 +11,13 @@
     "observability": {
         "enabled": true,
     },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "prod-d1",
+            // TODO: this is not the DB id for cranky's customs
+            "database_id": "44e98bba-33d2-48bb-88ad-d1a1a0c88505",
+            "migrations_dir": "drizzle",
+        },
+    ],
 }

@@ -1,9 +1,22 @@
 import GitHub from "@auth/core/providers/github";
 import { defineConfig } from "auth-astro";
+import { D1Adapter } from "@auth/d1-adapter";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { accounts, sessions, users, verificationTokens } from "./src/db/schema.ts";
 import { drizzle } from "drizzle-orm/libsql";
-import * as schema from "./src/db/schema.ts";
+import { migrate } from "drizzle-orm/libsql/migrator";
+import type { Adapter } from "@auth/core/adapters";
+import * as schema from "./src/db/schema";
+
+async function getAdapter(): Promise<Adapter> {
+    if (process.env.NODE_ENV === "dev") {
+        const db = drizzle(":memory:", { schema });
+        await migrate(db, { migrationsFolder: "./drizzle" });
+
+        return DrizzleAdapter(db);
+    }
+
+    return D1Adapter(process.env.DB);
+}
 
 export default defineConfig({
     providers: [
@@ -12,11 +25,5 @@ export default defineConfig({
             clientSecret: import.meta.env.GITHUB_CLIENT_SECRET,
         }),
     ],
-    // TODO: do we want to just hardcode binding name since wrangler.jsonc is specifying it anyways?
-    adapter: DrizzleAdapter(drizzle(process.env.BINDING_NAME!, { schema }), {
-        usersTable: users,
-        accountsTable: accounts,
-        sessionsTable: sessions,
-        verificationTokensTable: verificationTokens,
-    }),
+    adapter: await getAdapter(),
 });

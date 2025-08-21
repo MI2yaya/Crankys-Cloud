@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
+// TODO: for hot reloading, we should use Miniflare for dev instead of `wrangler dev`.
 export default defineConfig({
     out: "./drizzle",
     schema: "./src/db/schema.ts",

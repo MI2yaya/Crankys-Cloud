@@ -26,74 +26,76 @@ const { title, author, mapper, image, id, score } = Astro.props;
             <p>Difficulty</p>
         </div>
         <div class="actions">
-            <button
-                ><PixelarticonsArrowUp width="24px" height="24px" />
-                <span class="score">{score}</span>
-                <button
-                    ><PixelarticonsArrowDown width="24px" height="24px" />
-                    <div class="sep"></div>
-                    <button><PixelarticonsDownload width="24px" height="24px" /> </button>
-                </button>
+            <button>
+                <PixelarticonsArrowUp width="24px" height="24px" />
             </button>
-
-            <style lang="scss">
-                div.card {
-                    // The 2x1 image
-                    width: 480px;
-                    height: 240px;
-
-                    background-size: cover;
-
-                    h2 {
-                        margin-bottom: 0.5rem;
-                    }
-
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                div.content {
-                    text-align: right;
-                    width: 50%;
-                    background-color: rgba(255, 255, 255, 0.9);
-
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-
-                    .contentInner {
-                        padding: 6px;
-                    }
-
-                    .actions {
-                        width: 100%;
-                        background-color: white;
-                        padding: 6px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: right;
-
-                        .sep {
-                            width: 8px;
-                        }
-
-                        .score {
-                            font-size: 24px;
-                        }
-
-                        button {
-                            background: none;
-                            border: none;
-                            padding: 0;
-
-                            width: 24px;
-                            height: 24px;
-
-                            cursor: pointer;
-                        }
-                    }
-                }
-            </style>
+            <span class="score">{score}</span>
+            <button>
+                <PixelarticonsArrowDown width="24px" height="24px" />
+            </button>
+            <div class="sep"></div>
+            <button>
+                <PixelarticonsDownload width="24px" height="24px" />
+            </button>
         </div>
     </div>
+
+    <style lang="scss">
+        div.card {
+            // The 2x1 image
+            width: 480px;
+            height: 240px;
+
+            background-size: cover;
+
+            h2 {
+                margin-bottom: 0.5rem;
+            }
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        div.content {
+            text-align: right;
+            width: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .contentInner {
+                padding: 6px;
+            }
+
+            .actions {
+                width: 100%;
+                background-color: white;
+                padding: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: right;
+
+                .sep {
+                    width: 8px;
+                }
+
+                .score {
+                    font-size: 24px;
+                }
+
+                button {
+                    background: none;
+                    border: none;
+                    padding: 0;
+
+                    width: 24px;
+                    height: 24px;
+
+                    cursor: pointer;
+                }
+            }
+        }
+    </style>
 </div>

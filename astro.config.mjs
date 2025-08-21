@@ -16,5 +16,9 @@ export default defineConfig({
     output: "server",
 
     integrations: [auth()],
-    adapter: cloudflare(),
+    adapter: cloudflare({
+        platformProxy: {
+            enabled: true,
+        },
+    }),
 });

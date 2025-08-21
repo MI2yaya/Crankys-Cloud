@@ -5,6 +5,8 @@ import { integer, sqliteTable, text, primaryKey } from "drizzle-orm/sqlite-core"
 import type { AdapterAccountType } from "@auth/core/adapters";
 import { customAlphabet } from "nanoid";
 
+// ID length doesn't matter much, but it's contents do: we want a simple, copy-pastable
+// id.
 const nanoid = customAlphabet("1234567890abcdef", 22);
 
 export const users = sqliteTable("user", {
@@ -88,3 +90,19 @@ export const authenticators = sqliteTable(
         }),
     ],
 );
+
+export const track = sqliteTable("track", {
+    id: text("id")
+        .primaryKey()
+        .$defaultFn(() => nanoid()),
+    author: text("author"),
+    description: text("description"),
+    mapper: text("userId")
+        .notNull()
+        // TODO: do we delete songs if a user deletes themselves?
+        .references(() => users.id, { onDelete: "cascade" }),
+    image: text("image"),
+    // (download) link
+    link: text("link"),
+    // TODO: keep track of score
+});
