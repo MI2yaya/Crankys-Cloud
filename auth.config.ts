@@ -6,24 +6,38 @@ import { drizzle } from "drizzle-orm/libsql";
 import { migrate } from "drizzle-orm/libsql/migrator";
 import type { Adapter } from "@auth/core/adapters";
 import * as schema from "./src/db/schema";
+import memoize from 'memoize';
+import type { APIContext } from "astro";
 
-async function getAdapter(): Promise<Adapter> {
+async function getDevDatabaseUnmemoized(): Promise<Adapter> {
+    const db = drizzle(":memory:", { schema });
+    await migrate(db, { migrationsFolder: "./drizzle" });
+
+    return DrizzleAdapter(db, {
+        usersTable: schema.users,
+        accountsTable: schema.accounts,
+        sessionsTable: schema.sessions,
+        verificationTokensTable: schema.verificationTokens
+    });
+}
+// We want to persist the dev database at least for the entire runtime
+const getDevDatabase = memoize(getDevDatabaseUnmemoized);
+
+async function getAdapter(ctx: APIContext): Promise<Adapter> {
     if (process.env.NODE_ENV === "dev") {
-        const db = drizzle(":memory:", { schema });
-        await migrate(db, { migrationsFolder: "./drizzle" });
-
-        return DrizzleAdapter(db);
+        return await getDevDatabase()
     }
 
-    return D1Adapter(process.env.DB);
+    // @ts-ignore where did runtime go?
+    return D1Adapter(ctx.locals.runtime.env.DB);
 }
 
-export default defineConfig({
+export default defineConfig(async ctx => ({
     providers: [
         GitHub({
             clientId: import.meta.env.GITHUB_CLIENT_ID,
             clientSecret: import.meta.env.GITHUB_CLIENT_SECRET,
         }),
     ],
-    adapter: await getAdapter(),
-});
+    adapter: await getAdapter(ctx),
+}));

@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PixelarticonsGithub from "~icons/pixelarticons/github";
 import { getSession } from "auth-astro/server";
 
-const session = await getSession(Astro.request);
+const session = await getSession(Astro);
 
 if (session) {
     return Astro.redirect("/dashboard");

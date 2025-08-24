@@ -9,7 +9,7 @@ import { customAlphabet } from "nanoid";
 // id.
 const nanoid = customAlphabet("1234567890abcdef", 22);
 
-export const users = sqliteTable("user", {
+export const users = sqliteTable("users", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => nanoid()),
@@ -20,8 +20,9 @@ export const users = sqliteTable("user", {
 });
 
 export const accounts = sqliteTable(
-    "account",
+    "accounts",
     {
+        id: text("id").notNull(),
         userId: text("userId")
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
@@ -35,6 +36,8 @@ export const accounts = sqliteTable(
         scope: text("scope"),
         id_token: text("id_token"),
         session_state: text("session_state"),
+        oauth_token_secret: text("oauth_token_secret"),
+        oauth_token: text("oauth_token"),
     },
     (account) => [
         primaryKey({
@@ -44,16 +47,17 @@ export const accounts = sqliteTable(
     ],
 );
 
-export const sessions = sqliteTable("session", {
+export const sessions = sqliteTable("sessions", {
     sessionToken: text("sessionToken").primaryKey(),
     userId: text("userId")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
+    id: text("id").notNull(),
     expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
 });
 
 export const verificationTokens = sqliteTable(
-    "verificationToken",
+    "verification_tokens",
     {
         identifier: text("identifier").notNull(),
         token: text("token").notNull(),

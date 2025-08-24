@@ -31,3 +31,4 @@ src/worker.d.ts
 
 # other output
 *.zip
+.pnpm-store
