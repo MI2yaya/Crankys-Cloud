@@ -13,7 +13,9 @@ async function getDevDatabaseUnmemoized(): Promise<Adapter> {
     const db = drizzle(":memory:", { schema });
     await migrate(db, { migrationsFolder: "./drizzle" });
 
-    return DrizzleAdapter(db);
+    return DrizzleAdapter(db, {
+        usersTable: schema.users
+    });
 }
 // We want to persist the dev database at least for the entire runtime
 const getDevDatabase = memoize(getDevDatabaseUnmemoized);
@@ -23,6 +25,7 @@ async function getAdapter(ctx: APIContext): Promise<Adapter> {
         return await getDevDatabase()
     }
 
+    // @ts-ignore where did runtime go?
     return D1Adapter(ctx.locals.runtime.env.DB);
 }
 

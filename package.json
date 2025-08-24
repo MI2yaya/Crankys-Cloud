@@ -6,15 +6,15 @@
         "dev": "cross-env NODE_ENV=dev astro dev",
         "build": "astro build",
         "astro": "astro",
-        "preview": "wrangler dev",
-        "deploy": "wrangler deploy",
         "format": "pnpm exec prettier . --write",
         "wrangler:types": "wrangler types src/worker.d.ts",
         "db:generate": "drizzle-kit generate",
         "db:migrate:local": "wrangler d1 migrations apply prod-d1 --local",
         "db:studio": "drizzle-kit studio",
-        "wdev": "pnpm run build && pnpm run preview",
-        "wdev-host": "pnpm run build && wrangler dev --ip 127.0.0.1 --port 4321"
+        "preview": "wrangler dev",
+        "deploy": "wrangler deploy",
+        "wdev": "pnpm run build && pnpm run db:migrate:local && pnpm run preview",
+        "wdev-host": "pnpm run build && pnpm run db:migrate:local && wrangler dev --ip 127.0.0.1 --port 4321"
     },
     "dependencies": {
         "@astrojs/cloudflare": "^12.6.4",
