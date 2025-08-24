@@ -32,11 +32,17 @@
         "cross-env": "^10.0.0",
         "dotenv": "^17.2.1",
         "drizzle-kit": "^0.31.4",
+        "memoize": "^10.1.0",
         "nanoid": "^5.1.5",
         "prettier": "3.6.2",
         "prettier-plugin-astro": "0.14.1",
         "tsx": "^4.20.4",
         "unplugin-icons": "^22.2.0",
         "wrangler": "^4.31.0"
+    },
+    "pnpm": {
+        "patchedDependencies": {
+            "auth-astro@4.2.0": "patches/auth-astro.patch"
+        }
     }
 }

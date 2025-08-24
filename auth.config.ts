@@ -6,13 +6,20 @@ import { drizzle } from "drizzle-orm/libsql";
 import { migrate } from "drizzle-orm/libsql/migrator";
 import type { Adapter } from "@auth/core/adapters";
 import * as schema from "./src/db/schema";
+import memoize from 'memoize';
+
+async function getDevDatabaseUnmemoized(): Promise<Adapter> {
+    const db = drizzle(":memory:", { schema });
+    await migrate(db, { migrationsFolder: "./drizzle" });
+
+    return DrizzleAdapter(db);
+}
+// We want to persist the dev database at least for the entire runtime
+const getDevDatabase = memoize(getDevDatabaseUnmemoized);
 
 async function getAdapter(): Promise<Adapter> {
     if (process.env.NODE_ENV === "dev") {
-        const db = drizzle(":memory:", { schema });
-        await migrate(db, { migrationsFolder: "./drizzle" });
-
-        return DrizzleAdapter(db);
+        return await getDevDatabase()
     }
 
     return D1Adapter(process.env.DB);
