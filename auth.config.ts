@@ -14,7 +14,10 @@ async function getDevDatabaseUnmemoized(): Promise<Adapter> {
     await migrate(db, { migrationsFolder: "./drizzle" });
 
     return DrizzleAdapter(db, {
-        usersTable: schema.users
+        usersTable: schema.users,
+        accountsTable: schema.accounts,
+        sessionsTable: schema.sessions,
+        verificationTokensTable: schema.verificationTokens
     });
 }
 // We want to persist the dev database at least for the entire runtime
