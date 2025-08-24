@@ -26,3 +26,5 @@ pnpm-debug.log*
 # cloudflare
 .wrangler
 src/worker.d.ts
+
+.pnpm-store

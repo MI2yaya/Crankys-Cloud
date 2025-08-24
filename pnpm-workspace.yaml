@@ -1,0 +1,2 @@
+patchedDependencies:
+  auth-astro: patches/auth-astro.patch

@@ -9,7 +9,7 @@ import Card from "../../components/Card.astro";
 import { getSession } from "auth-astro/server";
 import { actions } from "astro:actions";
 
-const session = await getSession(Astro.request);
+const session = await getSession(Astro);
 
 const { page } = Astro.params;
 if (page === undefined) throw Error("A page number must be specified.");

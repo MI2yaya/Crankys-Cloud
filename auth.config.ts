@@ -18,7 +18,7 @@ async function getAdapter(): Promise<Adapter> {
     return D1Adapter(process.env.DB);
 }
 
-export default defineConfig({
+export default defineConfig(async ctx => ({
     providers: [
         GitHub({
             clientId: import.meta.env.GITHUB_CLIENT_ID,
@@ -26,4 +26,4 @@ export default defineConfig({
         }),
     ],
     adapter: await getAdapter(),
-});
+}));
