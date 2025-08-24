@@ -8,17 +8,55 @@ const session = await getSession(Astro.request);
 if (!session) {
     return Astro.redirect("/login");
 }
+
+const user = session.user?.name as string;
+console.log(user);
 ---
 
 <BaseLayout>
-    <div class="container">
-        <Header authenticated={!!session} />
-        <main>
-            <h1>Dashboard</h1>
-        </main>
-    </div>
+    <upload-section data-user={user}>
+        <div class="container">
+            <Header authenticated={!!session} />
+            <main>
+                <h1>Dashboard</h1>
+                <form data-upload>
+                    <input type="file" name="file" accept=".zip" />
+                    <button type="submit">Upload</button>
+                </form>
+            </main>
+        </div>
+    </upload-section>
 </BaseLayout>
 
+<script>
+    import JSZip from "jszip";
+    import { parseJsonText } from "typescript";
+    class UploadSection extends HTMLElement {
+        constructor() {
+            super();
+            const form: HTMLFormElement = document.querySelector("[data-upload]")!;
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                new FormData(form);
+            });
+            form.addEventListener("formdata", async (e) => {
+                const data = e.formData.get("file") as File;
+
+                const user = this.dataset.user as string;
+                await fetch("/api/upload", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        user: user,
+                    },
+                    method: "POST",
+                    body: await data.bytes(),
+                }).then(console.log);
+            });
+        }
+    }
+
+    customElements.define("upload-section", UploadSection);
+</script>
 <style>
     .container {
         display: flex;
