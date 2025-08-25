@@ -11,9 +11,11 @@ export interface Props {
     id: string;
     score: number;
     link: string;
+
+    mapperId: string;
 }
 
-const { title, author, mapper, image, id, score, link } = Astro.props;
+const { title, author, mapper, image, id, score, link, mapperId } = Astro.props;
 ---
 
 <div data-id={id} class="card" style={`background: no-repeat 100%/100% url(${image}), white`}>
@@ -21,9 +23,9 @@ const { title, author, mapper, image, id, score, link } = Astro.props;
     <div></div>
     <div class="content">
         <div class="contentInner">
-            <h2>{title}</h2>
+            <h2><a href={`/track/${id}`}>{title}</a></h2>
             <p>by: {author}</p>
-            <p>mapper: {mapper}</p>
+            <p>mapper: <a href={`/user/${mapperId}`}>{mapper}</a></p>
             <p>Difficulty</p>
         </div>
         <div class="actions">
@@ -42,6 +44,10 @@ const { title, author, mapper, image, id, score, link } = Astro.props;
     </div>
 
     <style lang="scss">
+        a {
+            color: black;
+        }
+
         div.card {
             // The 2x1 image
             width: 480px;

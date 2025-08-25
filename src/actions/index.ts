@@ -39,7 +39,10 @@ export const server = {
                     id: track.id,
                     author: track.author ?? "(Unknown)",
                     image: track.image ?? "/textures/default.png",
-                    link: track.link
+                    // TODO: we want to notNull this
+                    link: track.link!,
+
+                    mapperId: track.mapper.id
                 }));
 
             return {

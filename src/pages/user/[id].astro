@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro);
+---
+
+<BaseLayout>
+    <Header authenticated={!!session} />
+    <!-- TODO -->
+</BaseLayout>
