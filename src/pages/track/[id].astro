@@ -2,11 +2,53 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import { getSession } from "auth-astro/server";
+import { getDatabase } from "../../db/connection";
+import { eq } from 'drizzle-orm';
+import { tracks } from '../../db/schema'
 
 const session = await getSession(Astro);
+const db = await getDatabase(Astro);
+
+const { id } = Astro.params;
+
+if (!id) return new Response(null, { status: 404 });
+
+const song = await db.query.tracks.findFirst({
+    where: eq(tracks.id, id)
+})
+
+if (!song) return new Response(null, { status: 404 });
 ---
 
 <BaseLayout>
     <Header authenticated={!!session} />
-    <!-- TODO -->
+    <div class="container">
+        <main>
+            <h1>{song.title}</h1>
+
+            <p>Artist: {song.author}</p>
+            <!-- TODO: this is mapper ID -->
+            <p>Mapper: {song.mapper}</p>
+            
+            <p class="description">{song.description}</p>
+            <!-- TODO: rest of song fields -->
+        </main>
+    </div>
 </BaseLayout>
+
+<style>
+    div.container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .description {
+        border: 2px solid black;
+        padding: 1rem;
+    }
+
+    main {
+        max-width: 80ch;
+        width: 80ch;
+    }
+</style>
