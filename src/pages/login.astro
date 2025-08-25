@@ -16,14 +16,22 @@ if (session) {
             <h1><a href="/">Cranky's Cloud</a></h1>
         </header>
         <main>
-            <button id="github">
-                <PixelarticonsGithub />
-                Sign in with GitHub
-            </button>
-            <button id="discord">
-                <!-- TODO: discord icon - pixelarticons does not have this. -->
-                Sign in with Discord
-            </button>
+            <div class="signupContainer">
+                <button id="github">
+                    <PixelarticonsGithub />
+                    Sign in with GitHub
+                </button>
+                <button id="discord">
+                    <!-- TODO: discord icon - pixelarticons does not have this. -->
+                    Sign in with Discord
+                </button>
+            </div>
+            <p>
+                By registering, you agree to the
+                <a href="/tos">Terms of Service</a> and the
+                <a href="/privacy">Privacy policy</a>.
+                (We do not sell your data)
+            </p>
         </main>
     </div>
 </BaseLayout>
@@ -59,11 +67,30 @@ if (session) {
     main {
         max-width: 40ch;
         min-width: 40ch;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 0.5rem;
+
+        p {
+            font-size: 24px;
+            color: #444;
+            text-align: center;
+
+            a {
+                color: black;
+            }
+        }
+    }
+
+    .signupContainer {
         border: 2px solid black;
         padding: 1rem;
         padding-left: 2rem;
         padding-right: 2rem;
-
+        
         display: flex;
         justify-content: center;
         flex-direction: column;

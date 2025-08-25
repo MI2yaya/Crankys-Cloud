@@ -39,6 +39,7 @@ export const server = {
                     id: track.id,
                     author: track.author ?? "(Unknown)",
                     image: track.image ?? "/textures/default.png",
+                    link: track.link
                 }));
 
             return {

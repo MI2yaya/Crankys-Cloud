@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro);
+---
+
+<BaseLayout>
+    <Header authenticated={!!session} />
+    <div class="container">
+        <main>
+            <h1>Privacy Policy</h1>
+
+            <p>
+                We will notify you through in-website notifications
+                when the privacy polict has had non-grammatical changes, and update
+                the 'last updated at' timestamp at the bottom of this change for all changes,
+                including grammatical changes.
+            </p>
+
+            <h2>TL;DR</h2>
+
+            <ul>
+                <li>We do not share your data unless legally required.</li>
+                <li>We store information provided <i>explicitly</i> by you.</li>
+                <li>We store some action timestamps for moderation purposes.</li>
+                <li>We store the information provided to us by external OAuth providers.</li>
+            </ul>
+
+            <p>
+                We store all of the data explicitly provided to us by users. Specifically, we store
+                song votes and track information.
+            </p>
+
+            <p>
+                We store the data shared to us by our OAuth providers (GitHub and Discord) to
+                prevent fraud and keep Cranky's Customs working as expected. This includes your name,
+                email, and timestamps when you have signed in.
+            </p>
+
+            <p>
+                You are allowed, at any time,
+                to delete any part of your data, either through this website
+                (see your <a href="/dashboard/account">account panel</a>),
+                or by contacting us directly.
+            </p>
+
+            <hr />
+
+            <p>
+                For more technical details of what we store,
+                <a href="https://github.com/MI2yaya/Crankys-Cloud/blob/main/src/db/schema.ts">
+                    our database schema is open source.
+                </a>
+            </p>
+        </main>
+    </div>
+</BaseLayout>
+
+<style>
+    .container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    main {
+        max-width: 80ch;
+        width: 80ch;
+    }
+
+    p {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    ul {
+        font-size: 24px;
+    }
+</style>

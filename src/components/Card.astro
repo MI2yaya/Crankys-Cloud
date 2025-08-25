@@ -10,9 +10,10 @@ export interface Props {
     image: string;
     id: string;
     score: number;
+    link: string;
 }
 
-const { title, author, mapper, image, id, score } = Astro.props;
+const { title, author, mapper, image, id, score, link } = Astro.props;
 ---
 
 <div data-id={id} class="card" style={`background: no-repeat 100%/100% url(${image}), white`}>
@@ -34,9 +35,9 @@ const { title, author, mapper, image, id, score } = Astro.props;
                 <PixelarticonsArrowDown width="24px" height="24px" />
             </button>
             <div class="sep"></div>
-            <button>
+            <a href={link}>
                 <PixelarticonsDownload width="24px" height="24px" />
-            </button>
+            </a>
         </div>
     </div>
 
@@ -85,7 +86,7 @@ const { title, author, mapper, image, id, score } = Astro.props;
                     font-size: 24px;
                 }
 
-                button {
+                button, a {
                     background: none;
                     border: none;
                     padding: 0;

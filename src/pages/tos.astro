@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro);
+---
+
+<BaseLayout>
+    <Header authenticated={!!session} />
+    <div class="container">
+        <main>
+            <h1>Terms of Service</h1>
+
+            <p>
+                We will notify you through in-website notifications
+                when the terms of service have had non-grammatical changes, and update
+                the 'last updated at' timestamp at the bottom of this change for all changes,
+                including grammatical changes.
+            </p>
+
+            <h2>TL;DR</h2>
+
+            <ul>
+                <li>You must have the rights to distribute any content in uploaded tracks.</li>
+                <li>Do not abuse our site resources (e.g. through spam).</li>
+                <li>Do not manipulate track reviews.</li>
+            </ul>
+
+            <h2>Song Rights</h2>
+
+            <p>
+                By submitting a track to this site, you confirm that you have the rights to
+                publish or otherwise publicly distribute it's contents, including, but not limited
+                to: 
+            </p>
+
+            <ul>
+                <li>Rights to publicly distribute the associated music</li>
+                <li>Rights to all of the map data</li>
+                <li>Rights to publish all attached content included in the uploaded zip</li>
+                <li>Rights to share your distribution rights with Cranky's Customs</li>
+            </ul>
+
+            <p>
+                Any kind of content publishing of another user's content without explicit
+                permission is strictly disallowed by us, and is a violation of the song rights
+                policy.
+            </p>
+
+            <h2>
+                Account Rights
+            </h2>
+
+            <p>
+                We reserve the right to delete your account and its associated data at any time.
+            </p>
+
+            <p>
+                To prevent platform abuse, we prohibit the following actions nonexhaustively:
+            </p>
+
+            <ul>
+                <li>
+                    Excessive resource consumption (e.g. mass uploading/deleting songs)
+                    <ul>
+                        <li>
+                            You are still allowed to delete all of your data; <i>excessive</i>
+                            deleting (i.e. repeatedly uploading and deleting songs) is in
+                            violation of this policy.
+                        </li>
+                    </ul>
+                </li>
+                <li>Creating multiple accounts to manipulate song votes</li>
+                <li>Commercializing uploaded content</li>
+            </ul>
+        </main>
+    </div>
+</BaseLayout>
+
+<style>
+    .container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    main {
+        max-width: 80ch;
+        width: 80ch;
+        margin-bottom: 2rem;
+    }
+
+    p {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    ul {
+        font-size: 24px;
+    }
+</style>
