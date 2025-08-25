@@ -19,9 +19,10 @@ export const server = {
             // TODO: sorting?
             const paginatedTracks = await db.query.tracks.findMany({
                 with: {
-                    // TODO: i just want to count the list
+                    // TODO: i just want to count these lists
                     downvotes: true,
-                    upvotes: true
+                    upvotes: true,
+                    mapper: true
                 },
                 // Standard pagination trick: if there is more than `tracksPerPage` tracks,
                 // we know there is another page.
@@ -34,7 +35,7 @@ export const server = {
                 .map((track) => ({
                     score: track.upvotes.length - track.downvotes.length,
                     title: track.title,
-                    mapper: track.mapper,
+                    mapper: track.mapper.name ?? "(Unnamed)",
                     id: track.id,
                     author: track.author ?? "(Unknown)",
                     image: track.image ?? "/textures/default.png",

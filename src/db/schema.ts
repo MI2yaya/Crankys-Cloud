@@ -124,9 +124,15 @@ export const usersRelations = relations(users, ({ many }) => ({
     downvotes: many(usersToTracksDownvotes, { relationName: "user_downvotes" }),
 }));
 
-export const tracksRelations = relations(tracks, ({ many }) => ({
+export const tracksRelations = relations(tracks, ({ one, many }) => ({
     upvotes: many(usersToTracksUpvotes, { relationName: "track_upvotes" }),
     downvotes: many(usersToTracksDownvotes, { relationName: "track_downvotes" }),
+
+    mapper: one(users, {
+        relationName: "mapper",
+        fields: [tracks.mapper],
+        references: [users.id],
+    })
 }));
 
 export const usersToTracksUpvotes = sqliteTable(
