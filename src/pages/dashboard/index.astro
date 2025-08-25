@@ -5,11 +5,9 @@ import { getSession } from "auth-astro/server";
 import Logout from "../../components/Logout.astro";
 
 const session = await getSession(Astro);
-
 if (!session) {
     return Astro.redirect("/login");
 }
-
 const user = session.user?.name as string;
 ---
 
@@ -20,7 +18,7 @@ const user = session.user?.name as string;
             <main>
                 <h1>Dashboard</h1>
                 <div class="userCard">
-                    <img src={session.user?.image}>
+                    <img src={session.user?.image} />
                     <div class="info">
                         <h2>{user}</h2>
                         <a href="/dashboard/integrations">Manage sign-ins</a>
@@ -47,12 +45,14 @@ const user = session.user?.name as string;
             });
             form.addEventListener("formdata", async (e) => {
                 const data = e.formData.get("file") as File;
-
+                const zipName = data.name;
                 const user = this.dataset.user as string;
+
                 await fetch("/api/upload", {
                     headers: {
                         "Content-Type": "application/json",
                         user: user,
+                        zipName,
                     },
                     method: "POST",
                     body: await data.bytes(),
@@ -60,7 +60,6 @@ const user = session.user?.name as string;
             });
         }
     }
-
     customElements.define("upload-section", UploadSection);
 </script>
 <style lang="scss">

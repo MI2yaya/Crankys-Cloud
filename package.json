@@ -23,6 +23,7 @@
         "astro": "^5.13.2",
         "auth-astro": "^4.2.0",
         "drizzle-orm": "^0.44.4",
+        "jszip": "^3.10.1",
         "sass": "^1.90.0"
     },
     "devDependencies": {

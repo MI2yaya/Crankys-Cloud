@@ -105,6 +105,7 @@ export const tracks = sqliteTable("tracks", {
         .primaryKey()
         .$defaultFn(() => nanoid()),
     title: text("title"),
+    // Name of the Song Artist
     author: text("author"),
     description: text("description"),
     mapper: text("userId")

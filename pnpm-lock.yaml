@@ -10,72 +10,76 @@ patchedDependencies:
         path: patches/auth-astro.patch
 
 importers:
-    .:
-        dependencies:
-            "@astrojs/cloudflare":
-                specifier: ^12.6.4
-                version: 12.6.5(@types/node@24.3.0)(astro@5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2))(sass@1.90.0)(tsx@4.20.5)
-            "@auth/core":
-                specifier: ^0.37.4
-                version: 0.37.4
-            "@libsql/client":
-                specifier: ^0.15.12
-                version: 0.15.12
-            astro:
-                specifier: ^5.13.2
-                version: 5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2)
-            auth-astro:
-                specifier: ^4.2.0
-                version: 4.2.0(patch_hash=10442bf7160ffc2e713dc3a5f09a2af203ef84b683c6c183786708d06ae2659c)(@auth/core@0.37.4)(astro@5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2))
-            drizzle-orm:
-                specifier: ^0.44.4
-                version: 0.44.4(@cloudflare/workers-types@4.20250823.0)(@libsql/client@0.15.12)
-            sass:
-                specifier: ^1.90.0
-                version: 1.90.0
-        devDependencies:
-            "@auth/d1-adapter":
-                specifier: ^1.10.0
-                version: 1.10.0
-            "@auth/drizzle-adapter":
-                specifier: ^1.10.0
-                version: 1.10.0
-            "@iconify-json/pixelarticons":
-                specifier: ^1.2.2
-                version: 1.2.2
-            cross-env:
-                specifier: ^10.0.0
-                version: 10.0.0
-            dotenv:
-                specifier: ^17.2.1
-                version: 17.2.1
-            drizzle-kit:
-                specifier: ^0.31.4
-                version: 0.31.4
-            drizzle-seed:
-                specifier: ^0.3.1
-                version: 0.3.1(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250823.0)(@libsql/client@0.15.12))
-            memoize:
-                specifier: ^10.1.0
-                version: 10.1.0
-            nanoid:
-                specifier: ^5.1.5
-                version: 5.1.5
-            prettier:
-                specifier: 3.6.2
-                version: 3.6.2
-            prettier-plugin-astro:
-                specifier: 0.14.1
-                version: 0.14.1
-            tsx:
-                specifier: ^4.20.4
-                version: 4.20.5
-            unplugin-icons:
-                specifier: ^22.2.0
-                version: 22.2.0
-            wrangler:
-                specifier: ^4.31.0
-                version: 4.32.0(@cloudflare/workers-types@4.20250823.0)
+
+  .:
+    dependencies:
+      '@astrojs/cloudflare':
+        specifier: ^12.6.4
+        version: 12.6.5(@types/node@24.3.0)(astro@5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2))(sass@1.90.0)(tsx@4.20.5)
+      '@auth/core':
+        specifier: ^0.37.4
+        version: 0.37.4
+      '@libsql/client':
+        specifier: ^0.15.12
+        version: 0.15.12
+      astro:
+        specifier: ^5.13.2
+        version: 5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2)
+      auth-astro:
+        specifier: ^4.2.0
+        version: 4.2.0(patch_hash=10442bf7160ffc2e713dc3a5f09a2af203ef84b683c6c183786708d06ae2659c)(@auth/core@0.37.4)(astro@5.13.3(@types/node@24.3.0)(rollup@4.48.0)(sass@1.90.0)(tsx@4.20.5)(typescript@5.9.2))
+      drizzle-orm:
+        specifier: ^0.44.4
+        version: 0.44.4(@cloudflare/workers-types@4.20250823.0)(@libsql/client@0.15.12)
+      jszip:
+        specifier: ^3.10.1
+        version: 3.10.1
+      sass:
+        specifier: ^1.90.0
+        version: 1.90.0
+    devDependencies:
+      '@auth/d1-adapter':
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@auth/drizzle-adapter':
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@iconify-json/pixelarticons':
+        specifier: ^1.2.2
+        version: 1.2.2
+      cross-env:
+        specifier: ^10.0.0
+        version: 10.0.0
+      dotenv:
+        specifier: ^17.2.1
+        version: 17.2.1
+      drizzle-kit:
+        specifier: ^0.31.4
+        version: 0.31.4
+      drizzle-seed:
+        specifier: ^0.3.1
+        version: 0.3.1(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250823.0)(@libsql/client@0.15.12))
+      memoize:
+        specifier: ^10.1.0
+        version: 10.1.0
+      nanoid:
+        specifier: ^5.1.5
+        version: 5.1.5
+      prettier:
+        specifier: 3.6.2
+        version: 3.6.2
+      prettier-plugin-astro:
+        specifier: 0.14.1
+        version: 0.14.1
+      tsx:
+        specifier: ^4.20.4
+        version: 4.20.5
+      unplugin-icons:
+        specifier: ^22.2.0
+        version: 22.2.0
+      wrangler:
+        specifier: ^4.31.0
+        version: 4.32.0(@cloudflare/workers-types@4.20250823.0)
 
 packages:
     "@antfu/install-pkg@1.1.0":
@@ -2055,13 +2059,10 @@ packages:
             }
         engines: { node: ">=18" }
 
-    cross-env@10.0.0:
-        resolution:
-            {
-                integrity: sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==,
-            }
-        engines: { node: ">=20" }
-        hasBin: true
+  cross-env@10.0.0:
+    resolution: {integrity: sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==}
+    engines: {node: '>=20'}
+    hasBin: true
 
     cross-fetch@3.2.0:
         resolution:
@@ -2617,11 +2618,8 @@ packages:
                 integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==,
             }
 
-    immutable@5.1.3:
-        resolution:
-            {
-                integrity: sha512-+chQdDfvscSF1SJqv2gn4SRO2ZyS3xL3r7IW/wWEEzrzLisnOlKiQu5ytC/BVNcS15C39WT2Hg/bjKjDMcu+zg==,
-            }
+  immutable@5.1.3:
+    resolution: {integrity: sha512-+chQdDfvscSF1SJqv2gn4SRO2ZyS3xL3r7IW/wWEEzrzLisnOlKiQu5ytC/BVNcS15C39WT2Hg/bjKjDMcu+zg==}
 
     import-meta-resolve@4.1.0:
         resolution:
@@ -2629,11 +2627,8 @@ packages:
                 integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==,
             }
 
-    iron-webcrypto@1.2.1:
-        resolution:
-            {
-                integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==,
-            }
+  iron-webcrypto@1.2.1:
+    resolution: {integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==}
 
     is-arrayish@0.3.2:
         resolution:
@@ -2699,11 +2694,8 @@ packages:
             }
         engines: { node: ">=16" }
 
-    isexe@2.0.0:
-        resolution:
-            {
-                integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==,
-            }
+  isexe@2.0.0:
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
     jose@5.10.0:
         resolution:
@@ -2730,12 +2722,9 @@ packages:
             }
         hasBin: true
 
-    kleur@3.0.3:
-        resolution:
-            {
-                integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==,
-            }
-        engines: { node: ">=6" }
+  kleur@3.0.3:
+    resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
+    engines: {node: '>=6'}
 
     kleur@4.1.5:
         resolution:
@@ -2758,12 +2747,9 @@ packages:
         cpu: [x64, arm64, wasm32, arm]
         os: [darwin, linux, win32]
 
-    local-pkg@1.1.2:
-        resolution:
-            {
-                integrity: sha512-arhlxbFRmoQHl33a0Zkle/YWlmNwoyt6QNZEIJcqNbdrsix5Lvc4HyyI3EnwxTYlZYc32EbYrQ8SzEZ7dqgg9A==,
-            }
-        engines: { node: ">=14" }
+  local-pkg@1.1.2:
+    resolution: {integrity: sha512-arhlxbFRmoQHl33a0Zkle/YWlmNwoyt6QNZEIJcqNbdrsix5Lvc4HyyI3EnwxTYlZYc32EbYrQ8SzEZ7dqgg9A==}
+    engines: {node: '>=14'}
 
     longest-streak@3.1.0:
         resolution:
@@ -3247,11 +3233,8 @@ packages:
                 integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==,
             }
 
-    parse-latin@7.0.0:
-        resolution:
-            {
-                integrity: sha512-mhHgobPPua5kZ98EF4HWiH167JWBfl4pvAIXXdbaVohtK7a6YBOy56kvhCqduqyo/f3yrHFWmqmiMg/BkBkYYQ==,
-            }
+  parse-latin@7.0.0:
+    resolution: {integrity: sha512-mhHgobPPua5kZ98EF4HWiH167JWBfl4pvAIXXdbaVohtK7a6YBOy56kvhCqduqyo/f3yrHFWmqmiMg/BkBkYYQ==}
 
     parse5@7.3.0:
         resolution:
@@ -3353,11 +3336,8 @@ packages:
             }
         engines: { node: ">=6" }
 
-    promise-limit@2.7.0:
-        resolution:
-            {
-                integrity: sha512-7nJ6v5lnJsXwGprnGXga4wx6d1POjvi5Qmf1ivTRxTjH4Z/9Czja/UCMLVmB9N93GeWOU93XaFaEt6jbuoagNw==,
-            }
+  promise-limit@2.7.0:
+    resolution: {integrity: sha512-7nJ6v5lnJsXwGprnGXga4wx6d1POjvi5Qmf1ivTRxTjH4Z/9Czja/UCMLVmB9N93GeWOU93XaFaEt6jbuoagNw==}
 
     prompts@2.4.2:
         resolution:
@@ -3396,12 +3376,9 @@ packages:
                 integrity: sha512-b484I/7b8rDEdSDKckSSBA8knMpcdsXudlE/LNL639wFoHKwLbEkQFZHWEYwDC0wa0FKUcCY+GAF73Z7wxNVFA==,
             }
 
-    readdirp@4.1.2:
-        resolution:
-            {
-                integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==,
-            }
-        engines: { node: ">= 14.18.0" }
+  readdirp@4.1.2:
+    resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
+    engines: {node: '>= 14.18.0'}
 
     regex-recursion@6.0.2:
         resolution:
@@ -3526,11 +3503,8 @@ packages:
                 integrity: sha512-AUNrbEUHeKY8XsYr/DYpl+qk5+aM+DChopnWOPEzn8YKzOhv4l2zH6LzZms3tOZP3wwdOyc0RmTciyi46HLIuA==,
             }
 
-    sass-formatter@0.7.9:
-        resolution:
-            {
-                integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==,
-            }
+  sass-formatter@0.7.9:
+    resolution: {integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==}
 
     sass@1.90.0:
         resolution:
@@ -3554,12 +3528,9 @@ packages:
                 integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==,
             }
 
-    sharp@0.33.5:
-        resolution:
-            {
-                integrity: sha512-haPVm1EkS9pgvHrQ/F3Xy+hgcuMV0Wm9vfIBSiwZ05k+xgb0PkBQpGsAA/oWdDobNaZTH5ppvHtzCFbnSEwHVw==,
-            }
-        engines: { node: ^18.17.0 || ^20.3.0 || >=21.0.0 }
+  sharp@0.33.5:
+    resolution: {integrity: sha512-haPVm1EkS9pgvHrQ/F3Xy+hgcuMV0Wm9vfIBSiwZ05k+xgb0PkBQpGsAA/oWdDobNaZTH5ppvHtzCFbnSEwHVw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
 
     shebang-command@2.0.0:
         resolution:
@@ -3647,11 +3618,8 @@ packages:
             }
         engines: { node: ">=18" }
 
-    stringify-entities@4.0.4:
-        resolution:
-            {
-                integrity: sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==,
-            }
+  stringify-entities@4.0.4:
+    resolution: {integrity: sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==}
 
     strip-ansi@6.0.1:
         resolution:
@@ -3985,11 +3953,8 @@ packages:
             uploadthing:
                 optional: true
 
-    vfile-location@5.0.3:
-        resolution:
-            {
-                integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==,
-            }
+  vfile-location@5.0.3:
+    resolution: {integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==}
 
     vfile-message@4.0.3:
         resolution:
@@ -5274,7 +5239,7 @@ snapshots:
 
     cookie-es@1.2.2: {}
 
-    cookie@1.0.2: {}
+  cookie@1.0.2: {}
 
     cross-env@10.0.0:
         dependencies:
@@ -5639,11 +5604,11 @@ snapshots:
 
     html-void-elements@3.0.0: {}
 
-    http-cache-semantics@4.2.0: {}
+  http-cache-semantics@4.2.0: {}
 
     immutable@5.1.3: {}
 
-    import-meta-resolve@4.1.0: {}
+  import-meta-resolve@4.1.0: {}
 
     iron-webcrypto@1.2.1: {}
 
@@ -5674,7 +5639,7 @@ snapshots:
         dependencies:
             is-inside-container: 1.0.0
 
-    isexe@2.0.0: {}
+  isexe@2.0.0: {}
 
     jose@5.10.0: {}
 
@@ -5686,7 +5651,7 @@ snapshots:
         dependencies:
             argparse: 2.0.1
 
-    kleur@3.0.3: {}
+  kleur@3.0.3: {}
 
     kleur@4.1.5: {}
 
@@ -5707,11 +5672,11 @@ snapshots:
             "@libsql/linux-x64-musl": 0.5.17
             "@libsql/win32-x64-msvc": 0.5.17
 
-    local-pkg@1.1.2:
-        dependencies:
-            mlly: 1.8.0
-            pkg-types: 2.3.0
-            quansync: 0.2.11
+  local-pkg@1.1.2:
+    dependencies:
+      mlly: 1.8.0
+      pkg-types: 2.3.0
+      quansync: 0.2.11
 
     longest-streak@3.1.0: {}
 
@@ -6147,7 +6112,7 @@ snapshots:
 
     package-manager-detector@1.3.0: {}
 
-    pako@0.2.9: {}
+  pako@0.2.9: {}
 
     parse-latin@7.0.0:
         dependencies:
@@ -6206,7 +6171,7 @@ snapshots:
 
     prettier@3.6.2: {}
 
-    prismjs@1.30.0: {}
+  prismjs@1.30.0: {}
 
     promise-limit@2.7.0: {}
 
@@ -6225,7 +6190,7 @@ snapshots:
 
     radix3@1.1.2: {}
 
-    readdirp@4.1.2: {}
+  readdirp@4.1.2: {}
 
     regex-recursion@6.0.2:
         dependencies:
@@ -6358,7 +6323,7 @@ snapshots:
             "@rollup/rollup-win32-x64-msvc": 4.48.0
             fsevents: 2.3.3
 
-    s.color@0.0.15: {}
+  s.color@0.0.15: {}
 
     sass-formatter@0.7.9:
         dependencies:
@@ -6374,7 +6339,7 @@ snapshots:
 
     semver@7.7.2: {}
 
-    set-cookie-parser@2.7.1: {}
+  set-cookie-parser@2.7.1: {}
 
     sharp@0.33.5:
         dependencies:
@@ -6452,10 +6417,10 @@ snapshots:
             get-east-asian-width: 1.3.0
             strip-ansi: 7.1.0
 
-    stringify-entities@4.0.4:
-        dependencies:
-            character-entities-html4: 2.1.0
-            character-entities-legacy: 3.0.0
+  stringify-entities@4.0.4:
+    dependencies:
+      character-entities-html4: 2.1.0
+      character-entities-legacy: 3.0.0
 
     strip-ansi@6.0.1:
         dependencies:
@@ -6624,10 +6589,10 @@ snapshots:
             ofetch: 1.4.1
             ufo: 1.6.1
 
-    vfile-location@5.0.3:
-        dependencies:
-            "@types/unist": 3.0.3
-            vfile: 6.0.3
+  vfile-location@5.0.3:
+    dependencies:
+      '@types/unist': 3.0.3
+      vfile: 6.0.3
 
     vfile-message@4.0.3:
         dependencies:
