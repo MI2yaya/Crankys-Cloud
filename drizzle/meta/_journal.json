@@ -22,6 +22,13 @@
       "when": 1756078410445,
       "tag": "0002_dapper_rawhide_kid",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1756080767434,
+      "tag": "0003_mixed_marvel_boy",
+      "breakpoints": true
     }
   ]
 }

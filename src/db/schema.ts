@@ -2,6 +2,7 @@
 // were provided by Auth.js: https://authjs.dev/getting-started/adapters/drizzle
 
 import { integer, sqliteTable, text, primaryKey } from "drizzle-orm/sqlite-core";
+import { relations } from 'drizzle-orm';
 import type { AdapterAccountType } from "@auth/core/adapters";
 import { customAlphabet } from "nanoid";
 
@@ -95,7 +96,7 @@ export const authenticators = sqliteTable(
     ],
 );
 
-export const track = sqliteTable("track", {
+export const tracks = sqliteTable("tracks", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => nanoid()),
@@ -108,5 +109,9 @@ export const track = sqliteTable("track", {
     image: text("image"),
     // (download) link
     link: text("link"),
-    // TODO: keep track of score
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+	upvotes: many(tracks),
+    downvotes: many(tracks),
+}));
