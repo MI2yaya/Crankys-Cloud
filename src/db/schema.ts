@@ -100,6 +100,7 @@ export const tracks = sqliteTable("tracks", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => nanoid()),
+    title: text("title"),
     author: text("author"),
     description: text("description"),
     mapper: text("userId")

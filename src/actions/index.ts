@@ -4,17 +4,6 @@ import type { Props as CardProps } from "../components/Card.astro";
 import { getDatabase } from "../db/connection";
 import { tracks } from '../db/schema'
 
-const cards: CardProps[] = Array(40)
-    .fill(0)
-    .map((_, i) => ({
-        id: i.toString(),
-        title: "Title" + Math.round(Math.random() * 1000),
-        author: "Author",
-        mapper: "Mapper",
-        image: `/textures/default.png`,
-        score: 0,
-    }));
-
 export const server = {
     getCards: defineAction({
         input: z.object({
