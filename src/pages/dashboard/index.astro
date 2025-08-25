@@ -1,8 +1,8 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
 import { getSession } from "auth-astro/server";
-import Logout from "../components/Logout.astro";
+import Logout from "../../components/Logout.astro";
 
 const session = await getSession(Astro);
 

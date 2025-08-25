@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro);
+
+if (!session) {
+    return Astro.redirect("/login");
+}
+---
+
+<BaseLayout>
+    <Header authenticated={!!session} />
+    <div class="container">
+        <main>
+            <h1>Sign-ins</h1>
+        </main>
+    </div>
+</BaseLayout>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main {
+        max-width: 80ch;
+    }
+</style>
