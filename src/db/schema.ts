@@ -104,7 +104,8 @@ export const tracks = sqliteTable("tracks", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => nanoid()),
-    title: text("title"),
+    title: text("title").notNull(),
+    // (song) author
     author: text("author"),
     description: text("description"),
     mapper: text("userId")
@@ -117,6 +118,63 @@ export const tracks = sqliteTable("tracks", {
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
-    upvotes: many(tracks),
-    downvotes: many(tracks),
+    upvotes: many(usersToTracksUpvotes, { relationName: "user_upvotes" }),
+    downvotes: many(usersToTracksDownvotes, { relationName: "user_downvotes" }),
+}));
+
+export const tracksRelations = relations(tracks, ({ many }) => ({
+    upvotes: many(usersToTracksUpvotes, { relationName: "track_upvotes" }),
+    downvotes: many(usersToTracksDownvotes, { relationName: "track_downvotes" }),
+}));
+
+export const usersToTracksUpvotes = sqliteTable(
+    "users_to_tracks_upvotes",
+    {
+        userId: integer("user_id")
+            .notNull()
+            .references(() => users.id),
+        trackId: integer("track_id")
+            .notNull()
+            .references(() => tracks.id),
+    },
+    (t) => [primaryKey({ columns: [t.userId, t.trackId] })],
+);
+
+export const usersToTracksUpvotesRelations = relations(usersToTracksUpvotes, ({ one }) => ({
+    track: one(tracks, {
+        fields: [usersToTracksUpvotes.trackId],
+        references: [tracks.id],
+        relationName: "track_upvotes"
+    }),
+    user: one(users, {
+        fields: [usersToTracksUpvotes.userId],
+        references: [users.id],
+        relationName: "user_upvotes"
+    }),
+}));
+
+export const usersToTracksDownvotes = sqliteTable(
+    "users_to_tracks_downvotes",
+    {
+        userId: integer("user_id")
+            .notNull()
+            .references(() => users.id),
+        trackId: integer("track_id")
+            .notNull()
+            .references(() => tracks.id),
+    },
+    (t) => [primaryKey({ columns: [t.userId, t.trackId] })],
+);
+
+export const usersToTracksDownvotesRelations = relations(usersToTracksDownvotes, ({ one }) => ({
+    track: one(tracks, {
+        fields: [usersToTracksDownvotes.trackId],
+        references: [tracks.id],
+        relationName: "track_downvotes"
+    }),
+    user: one(users, {
+        fields: [usersToTracksDownvotes.userId],
+        references: [users.id],
+        relationName: "user_downvotes"
+    }),
 }));

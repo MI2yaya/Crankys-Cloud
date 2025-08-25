@@ -20,7 +20,7 @@ const user = session.user?.name as string;
             <main>
                 <h1>Dashboard</h1>
                 <div class="userCard">
-                    <img src={session.user?.image}>
+                    <img src={session.user?.image} />
                     <div class="info">
                         <h2>{user}</h2>
                         <a href="/dashboard/integrations">Manage sign-ins</a>
