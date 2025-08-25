@@ -22,8 +22,22 @@ export const server = {
             page: z.number().min(1),
         }),
         handler: async ({ page }, ctx) => {
+            // TODO: user customization?
+            const tracksPerPage = 20;
+            
             const db = await getDatabase(ctx);
-            return await db.select().from(tracks)
+
+            const paginatedTracks = await db.select()
+                .from(tracks)
+                // Standard pagination trick: if there is more than `tracksPerPage` tracks,
+                // we know there is another page.
+                .limit(tracksPerPage + 1)
+                .offset((page - 1) * tracksPerPage);
+
+            return {
+                tracks: paginatedTracks.slice(0, tracksPerPage),
+                nextPage: tracksPerPage < paginatedTracks.length
+            }
         },
     }),
 };

@@ -13,7 +13,18 @@ async function getDevDatabaseUnmemoized(): Promise<LibSQLDatabase<typeof schema>
 
     await migrate(db, { migrationsFolder: "./drizzle" });
 
-    await seed(db, schema);
+    await seed(db, schema).refine(f => ({
+        tracks: {
+            count: 100,
+            columns: {
+                image: f.valuesFromArray({
+                    values: [
+                        '/textures/default.png'
+                    ]
+                })
+            }
+        }
+    }));
 
     return db
 }
