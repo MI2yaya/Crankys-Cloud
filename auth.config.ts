@@ -12,8 +12,8 @@ export default defineConfig(async (ctx) => ({
     adapter: await getAdapter(ctx),
     callbacks: {
         session({ session, user }) {
-            session.user.id = user.id
-            return session
-        }
-    }
+            session.user.id = user.id;
+            return session;
+        },
+    },
 }));

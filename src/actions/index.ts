@@ -19,10 +19,10 @@ export const server = {
             // TODO: sorting?
             const paginatedTracks = await db.query.tracks.findMany({
                 with: {
+                    mapper: true,
                     // TODO: i just want to count these lists
                     downvotes: true,
                     upvotes: true,
-                    mapper: true
                 },
                 // Standard pagination trick: if there is more than `tracksPerPage` tracks,
                 // we know there is another page.

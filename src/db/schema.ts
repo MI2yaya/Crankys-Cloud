@@ -132,7 +132,7 @@ export const tracksRelations = relations(tracks, ({ one, many }) => ({
         relationName: "mapper",
         fields: [tracks.mapper],
         references: [users.id],
-    })
+    }),
 }));
 
 export const usersToTracksUpvotes = sqliteTable(
@@ -152,12 +152,12 @@ export const usersToTracksUpvotesRelations = relations(usersToTracksUpvotes, ({ 
     track: one(tracks, {
         fields: [usersToTracksUpvotes.trackId],
         references: [tracks.id],
-        relationName: "track_upvotes"
+        relationName: "track_upvotes",
     }),
     user: one(users, {
         fields: [usersToTracksUpvotes.userId],
         references: [users.id],
-        relationName: "user_upvotes"
+        relationName: "user_upvotes",
     }),
 }));
 
@@ -178,11 +178,11 @@ export const usersToTracksDownvotesRelations = relations(usersToTracksDownvotes,
     track: one(tracks, {
         fields: [usersToTracksDownvotes.trackId],
         references: [tracks.id],
-        relationName: "track_downvotes"
+        relationName: "track_downvotes",
     }),
     user: one(users, {
         fields: [usersToTracksDownvotes.userId],
         references: [users.id],
-        relationName: "user_downvotes"
+        relationName: "user_downvotes",
     }),
 }));
