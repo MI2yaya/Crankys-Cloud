@@ -1,41 +1,41 @@
 {
-  "version": "7",
-  "dialect": "sqlite",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "6",
-      "when": 1755730346898,
-      "tag": "0000_silly_scalphunter",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1756078068709,
-      "tag": "0001_zippy_puff_adder",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1756078410445,
-      "tag": "0002_dapper_rawhide_kid",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1756080767434,
-      "tag": "0003_mixed_marvel_boy",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1756088387495,
-      "tag": "0004_right_blue_marvel",
-      "breakpoints": true
-    }
-  ]
+    "version": "7",
+    "dialect": "sqlite",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "6",
+            "when": 1755730346898,
+            "tag": "0000_silly_scalphunter",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "6",
+            "when": 1756078068709,
+            "tag": "0001_zippy_puff_adder",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "6",
+            "when": 1756078410445,
+            "tag": "0002_dapper_rawhide_kid",
+            "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "6",
+            "when": 1756080767434,
+            "tag": "0003_mixed_marvel_boy",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "6",
+            "when": 1756088387495,
+            "tag": "0004_right_blue_marvel",
+            "breakpoints": true
+        }
+    ]
 }

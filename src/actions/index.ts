@@ -2,7 +2,7 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import type { Props as CardProps } from "../components/Card.astro";
 import { getDatabase } from "../db/connection";
-import { tracks } from '../db/schema'
+import { tracks } from "../db/schema";
 
 export const server = {
     getCards: defineAction({
@@ -13,10 +13,11 @@ export const server = {
         handler: async ({ page }, ctx) => {
             // TODO: user customization?
             const tracksPerPage = 20;
-            
+
             const db = await getDatabase(ctx);
 
-            const paginatedTracks = await db.select()
+            const paginatedTracks = await db
+                .select()
                 .from(tracks)
                 // Standard pagination trick: if there is more than `tracksPerPage` tracks,
                 // we know there is another page.
@@ -25,8 +26,8 @@ export const server = {
 
             return {
                 tracks: paginatedTracks.slice(0, tracksPerPage),
-                nextPage: tracksPerPage < paginatedTracks.length
-            }
+                nextPage: tracksPerPage < paginatedTracks.length,
+            };
         },
     }),
 };

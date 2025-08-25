@@ -2,7 +2,7 @@
 // were provided by Auth.js: https://authjs.dev/getting-started/adapters/drizzle
 
 import { integer, sqliteTable, text, primaryKey } from "drizzle-orm/sqlite-core";
-import { relations } from 'drizzle-orm';
+import { relations } from "drizzle-orm";
 import type { AdapterAccountType } from "@auth/core/adapters";
 import { customAlphabet } from "nanoid";
 
@@ -23,7 +23,9 @@ export const users = sqliteTable("users", {
 export const accounts = sqliteTable(
     "accounts",
     {
-        id: text("id").notNull().$defaultFn(() => nanoid()),
+        id: text("id")
+            .notNull()
+            .$defaultFn(() => nanoid()),
         userId: text("userId")
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
@@ -53,7 +55,9 @@ export const sessions = sqliteTable("sessions", {
     userId: text("userId")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
-    id: text("id").notNull().$defaultFn(() => nanoid()),
+    id: text("id")
+        .notNull()
+        .$defaultFn(() => nanoid()),
     expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
 });
 
@@ -113,6 +117,6 @@ export const tracks = sqliteTable("tracks", {
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
-	upvotes: many(tracks),
+    upvotes: many(tracks),
     downvotes: many(tracks),
 }));
