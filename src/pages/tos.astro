@@ -51,6 +51,31 @@ const session = await getSession(Astro);
                 policy.
             </p>
 
+            <h2>Song Content</h2>
+
+            <p>Songs and their associated mappings and information must not (non-exhaustively):</p>
+
+            <ul>
+                <li>
+                    Contain any explicit content
+                    <ul>
+                        <li>
+                            This extends to any associated song information (i.e. song title,
+                            description)
+                        </li>
+                    </ul>
+                </li>
+                <li>Contain physically harmful audio</li>
+                <li>
+                    Require any proprietary mods (all associated mods must be non-malicious and
+                    open source on some reputable git forge.)
+                </li>
+                <li>
+                    Contain AI-generated assets
+                </li>
+                <li>Contain hate speech</li>
+            </ul>
+
             <h2>
                 Account Rights
             </h2>
@@ -79,8 +104,8 @@ const session = await getSession(Astro);
             </ul>
 
             <p id="footnote-deletion" class="footnote">
-                [1] While not legally applicable, we strive to only exercise this right in platform
-                abuse cases, or other cases that endanger others.
+                [1] While not legally applicable, we strive to only exercise this right in cases
+                that explicitly violate points in our terms of service.
             </p>
         </main>
     </div>
