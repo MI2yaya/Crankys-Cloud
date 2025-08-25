@@ -25,6 +25,9 @@ const session = await getSession(Astro);
                 <li>You must have the rights to distribute any content in uploaded tracks.</li>
                 <li>Do not abuse our site resources (e.g. through spam).</li>
                 <li>Do not manipulate track reviews.</li>
+                <li>We reserve the right to delete your data at any time
+                    <a href="#footnote-deletion">[1]</a>.
+                </li>
             </ul>
 
             <h2>Song Rights</h2>
@@ -74,6 +77,11 @@ const session = await getSession(Astro);
                 <li>Creating multiple accounts to manipulate song votes</li>
                 <li>Commercializing uploaded content</li>
             </ul>
+
+            <p id="footnote-deletion" class="footnote">
+                [1] While not legally applicable, we strive to only exercise this right in platform
+                abuse cases, or other cases that endanger others.
+            </p>
         </main>
     </div>
 </BaseLayout>
@@ -97,6 +105,10 @@ const session = await getSession(Astro);
     }
 
     ul {
+        font-size: 24px;
+    }
+
+    .footnote {
         font-size: 24px;
     }
 </style>
