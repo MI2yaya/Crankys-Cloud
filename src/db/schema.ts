@@ -112,6 +112,8 @@ export const tracks = sqliteTable("tracks", {
         .notNull()
         // TODO: do we delete songs if a user deletes themselves?
         .references(() => users.id, { onDelete: "cascade" }),
+    // Field for imported data: discord users that log in should automatically own their songs
+    discordID: text("discordID"),
     image: text("image"),
     // (download) link
     link: text("link"),

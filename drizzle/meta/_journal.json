@@ -43,6 +43,13 @@
       "when": 1756095325012,
       "tag": "0005_sleepy_infant_terrible",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1756098085552,
+      "tag": "0006_faulty_jackal",
+      "breakpoints": true
     }
   ]
 }
