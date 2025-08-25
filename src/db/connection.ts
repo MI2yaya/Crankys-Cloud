@@ -7,6 +7,7 @@ import * as schema from "./schema";
 import memoize from "memoize";
 import type { APIContext } from "astro";
 import { seed } from "drizzle-seed";
+import { D1Adapter } from "@auth/d1-adapter";
 
 async function getDevDatabaseUnmemoized(): Promise<LibSQLDatabase<typeof schema>> {
     const db = drizzle(":memory:", { schema });

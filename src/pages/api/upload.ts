@@ -1,19 +1,44 @@
 import type { APIRoute } from "astro";
 import JSZip from "jszip";
-import { createWriteStream } from "node:fs";
+import { getDatabase } from "../../db/connection";
+import { tracks, users } from "../../db/schema";
+import { eq } from "drizzle-orm";
 
-export const POST: APIRoute = async ({ params, request }): Promise<Response> => {
-    const zip = await JSZip.loadAsync(await request.arrayBuffer());
-    const userName = request.headers.get("user");
+export const POST: APIRoute = async (ctx): Promise<Response> => {
+  const zip = await JSZip.loadAsync(await ctx.request.arrayBuffer());
+  const zipName = ctx.request.headers.get("zipName");
+  const userID = ctx.request.headers.get("user");
+  console.log("id:" + userID);
 
-    // output the zip file. this is temporary LOL
-    zip.generateNodeStream({ type: "nodebuffer", streamFiles: true })
-        .pipe(createWriteStream("out.zip"))
-        .on("finish", function () {
-            // JSZip generates a readable stream with a "end" event,
-            // but is piped here in a writable stream which emits a "finish" event.
-            console.log("out.zip written.");
-        });
+  const manifest = zip.file(zipName?.replace(".zip", "") + "/manifest.json");
+  if (!manifest) {
+    console.log("no manifest found for " + zipName);
+    return new Response("Could not find manifest.json", {
+      status: 400,
+    })
+  }
+
+  const meta = JSON.parse(await manifest.async("string")).metadata;
+  // console.log(meta);
+
+  const db
+   = await getDatabase(ctx);
+
+   let user = await db.
+     select()
+     .from(users)
+     .where(eq(users.name, userID!))
+     .execute();
+
+   await db.insert(tracks).values({
+    title: meta.songName as string,
+    author: meta.artist as string,
+    description: meta.description as string,
+    mapper: user[0].id,
+    image: "",
+    link: "",      
+   }).returning().execute()
+
 
     return new Response("", {
         status: 200,
