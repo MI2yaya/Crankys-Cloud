@@ -23,7 +23,7 @@ export const users = sqliteTable("users", {
 export const accounts = sqliteTable(
     "accounts",
     {
-        id: text("id").notNull(),
+        id: text("id").notNull().$defaultFn(() => nanoid()),
         userId: text("userId")
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
@@ -53,7 +53,7 @@ export const sessions = sqliteTable("sessions", {
     userId: text("userId")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
-    id: text("id").notNull(),
+    id: text("id").notNull().$defaultFn(() => nanoid()),
     expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
 });
 
