@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import { getSession } from "auth-astro/server";
+import Logout from "../components/Logout.astro";
 
 const session = await getSession(Astro);
 
@@ -10,7 +11,6 @@ if (!session) {
 }
 
 const user = session.user?.name as string;
-console.log(user);
 ---
 
 <BaseLayout>
@@ -19,6 +19,14 @@ console.log(user);
             <Header authenticated={!!session} />
             <main>
                 <h1>Dashboard</h1>
+                <div class="userCard">
+                    <img src={session.user?.image}>
+                    <div class="info">
+                        <h2>{user}</h2>
+                        <a href="/dashboard/integrations">Manage sign-ins</a>
+                        <Logout />
+                    </div>
+                </div>
                 <form data-upload>
                     <input type="file" name="file" accept=".zip" />
                     <button type="submit">Upload</button>
@@ -55,7 +63,7 @@ console.log(user);
 
     customElements.define("upload-section", UploadSection);
 </script>
-<style>
+<style lang="scss">
     .container {
         display: flex;
         flex-direction: column;
@@ -64,5 +72,25 @@ console.log(user);
 
     main {
         max-width: 80ch;
+    }
+
+    .userCard {
+        display: flex;
+        margin-bottom: 1rem;
+
+        img {
+            width: calc(24px * 3 + 8px);
+            margin: 0.5rem;
+            border: 2px solid black;
+        }
+
+        .info {
+            font-size: 24px;
+
+            a {
+                color: black;
+                display: block;
+            }
+        }
     }
 </style>

@@ -1,4 +1,6 @@
 ---
+import Logout from './Logout.astro';
+
 export interface Props {
     authenticated: boolean;
 }
@@ -15,7 +17,7 @@ const { authenticated } = Astro.props;
             authenticated ? (
                 <>
                     <a href="/dashboard">dashboard</a>
-                    <button id="logout">logout</button>
+                    <Logout />
                 </>
             ) : (
                 <a href="/login">login</a>
@@ -24,22 +26,7 @@ const { authenticated } = Astro.props;
     </div>
 </header>
 
-<script>
-    import { signOut } from "auth-astro/client";
-    const logoutButton = document.querySelector<HTMLButtonElement>("#logout")!;
-
-    logoutButton.addEventListener("click", () => signOut());
-</script>
-
 <style lang="scss">
-    button {
-        background-color: transparent;
-        color: black;
-        border: none;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-
     a {
         color: black;
         cursor: pointer;

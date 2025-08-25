@@ -1,0 +1,19 @@
+<button id="logout">logout</button>
+
+<script>
+    import { signOut } from "auth-astro/client";
+    const logoutButton = document.querySelector<HTMLButtonElement>("#logout")!;
+
+    logoutButton.addEventListener("click", () => signOut());
+</script>
+
+<style>
+    button {
+        background-color: transparent;
+        color: black;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
