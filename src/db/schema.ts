@@ -6,7 +6,7 @@ import { relations } from 'drizzle-orm';
 import type { AdapterAccountType } from "@auth/core/adapters";
 import { customAlphabet } from "nanoid";
 
-// ID length doesn't matter much, but it's contents do: we want a simple, copy-pastable
+// ID length doesn't matter much, but its contents do: we want a simple, copy-pastable
 // id.
 const nanoid = customAlphabet("1234567890abcdef", 22);
 

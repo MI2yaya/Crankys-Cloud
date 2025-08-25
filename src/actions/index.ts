@@ -1,6 +1,8 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import type { Props as CardProps } from "../components/Card.astro";
+import { getDatabase } from "../db/connection";
+import { tracks } from '../db/schema'
 
 const cards: CardProps[] = Array(40)
     .fill(0)
@@ -19,8 +21,9 @@ export const server = {
             // Since pages are exposed to the URL, we make pages start at 1.
             page: z.number().min(1),
         }),
-        handler: async ({ page }) => {
-            return cards;
+        handler: async ({ page }, ctx) => {
+            const db = await getDatabase(ctx);
+            return await db.select().from(tracks)
         },
     }),
 };
