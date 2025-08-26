@@ -1,0 +1,87 @@
+---
+import PixelarticonsArrowLeft from "~icons/pixelarticons/arrow-left";
+import PixelarticonsArrowRight from "~icons/pixelarticons/arrow-right";
+import type { Props as CardProps } from "./Card.astro";
+import Card from "./Card.astro";
+import { actions } from "astro:actions";
+import type { Session } from "@auth/core/types";
+
+interface Props {
+    page: number;
+    root: string;
+    session?: Session;
+    dash: boolean;
+}
+
+// session to allow the user to edit their own maps
+const { page, root, session, dash } = Astro.props;
+
+const { data, error } = await Astro.callAction(actions.getCards, {
+    page,
+    // Grab only the charts by the user if on the dashboard
+    // mapper: (root == "/dashboard/")? session?.user?.id? session.user.id : undefined : undefined
+    mapper: dash ? session?.user?.id! : undefined,
+});
+
+if (error) {
+    throw Error(error); // TODO
+}
+
+const { tracks, nextPage } = data;
+---
+
+<div class="levelsContainer">
+    <div id="levels">
+        {tracks.map((card) => <Card {...card} />)}
+    </div>
+</div>
+<div class="navigation">
+    <a href={page === 1 ? null : `${root}${page - 1}`}>
+        <PixelarticonsArrowLeft width="24px" height="24px" />
+        previous
+    </a>
+    <a href={nextPage ? `/page/${page + 1}` : null}>
+        next
+        <PixelarticonsArrowRight width="24px" height="24px" />
+    </a>
+</div>
+
+<style lang="scss">
+    .navigation {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 24px;
+        text-align: center;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        a {
+            color: black;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+
+    .levelsContainer {
+        border: 2px solid black;
+        border-bottom: none;
+        flex: 1;
+    }
+
+    #levels {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto auto;
+
+        max-height: 100%;
+
+        // To create the impression of a 2px border between elements
+        gap: 2px;
+        background-color: black;
+        border-bottom: 2px solid black;
+    }
+</style>

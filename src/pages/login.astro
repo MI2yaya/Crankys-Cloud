@@ -6,7 +6,7 @@ import { getSession } from "auth-astro/server";
 const session = await getSession(Astro);
 
 if (session) {
-    return Astro.redirect("/dashboard");
+    return Astro.redirect("/dashboard/1");
 }
 ---
 
@@ -29,8 +29,7 @@ if (session) {
             <p>
                 By registering, you agree to the
                 <a href="/tos">Terms of Service</a> and the
-                <a href="/privacy">Privacy policy</a>.
-                (We do not sell your data)
+                <a href="/privacy">Privacy policy</a>. (We do not sell your data)
             </p>
         </main>
     </div>
@@ -90,7 +89,7 @@ if (session) {
         padding: 1rem;
         padding-left: 2rem;
         padding-right: 2rem;
-        
+
         display: flex;
         justify-content: center;
         flex-direction: column;

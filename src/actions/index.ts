@@ -2,22 +2,31 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import type { Props as CardProps } from "../components/Card.astro";
 import { getDatabase } from "../db/connection";
-import { tracks, usersRelations } from "../db/schema";
+import { and, eq } from "drizzle-orm";
+import { tracks } from "../db/schema";
 
 export const server = {
     getCards: defineAction({
         input: z.object({
             // Since pages are exposed to the URL, we make pages start at 1.
             page: z.number().min(1),
+            mapper: z.string().optional(),
         }),
-        handler: async ({ page }, ctx) => {
+        handler: async ({ page, mapper }, ctx) => {
             // TODO: tracksPerPage customization?
             const tracksPerPage = 20;
 
             const db = await getDatabase(ctx);
 
+            let where = [];
+            // This is here for the dashboard right now, could be used for filtering by mapper in the future
+            if (mapper) {
+                where.push(eq(tracks.mapper, mapper!))
+            }
+
             // TODO: sorting?
             const paginatedTracks = await db.query.tracks.findMany({
+                where: and(...where),
                 with: {
                     mapper: true,
                     // TODO: i just want to count these lists
