@@ -8,11 +8,12 @@ const session = await getSession(Astro);
 if (!session) {
     return Astro.redirect("/login");
 }
-const user = session.user?.name as string;
+const userID = session.user?.id as string;
+const userName = session.user?.name as string;
 ---
 
 <BaseLayout>
-    <upload-section data-user={user}>
+    <upload-section data-user={userID}>
         <div class="container">
             <Header authenticated={!!session} />
             <main>
@@ -20,7 +21,7 @@ const user = session.user?.name as string;
                 <div class="userCard">
                     <img src={session.user?.image} />
                     <div class="info">
-                        <h2>{user}</h2>
+                        <h2>{userName}</h2>
                         <a href="/dashboard/account">Manage account</a>
                         <Logout />
                     </div>
@@ -34,34 +35,7 @@ const user = session.user?.name as string;
     </upload-section>
 </BaseLayout>
 
-<script>
-    class UploadSection extends HTMLElement {
-        constructor() {
-            super();
-            const form: HTMLFormElement = document.querySelector("[data-upload]")!;
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                new FormData(form);
-            });
-            form.addEventListener("formdata", async (e) => {
-                const data = e.formData.get("file") as File;
-                const zipName = data.name;
-                const user = this.dataset.user as string;
-
-                await fetch("/api/upload", {
-                    headers: {
-                        "Content-Type": "application/json",
-                        user: user,
-                        zipName,
-                    },
-                    method: "POST",
-                    body: await data.bytes(),
-                }).then(console.log);
-            });
-        }
-    }
-    customElements.define("upload-section", UploadSection);
-</script>
+<script src="./index.ts"></script>
 <style lang="scss">
     .container {
         display: flex;
