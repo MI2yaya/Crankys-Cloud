@@ -40,7 +40,7 @@ export async function getDatabase(
 
     // @ts-ignore where did runtime go?
     const db = ctx.locals.runtime.env.DB;
-    return drizzleD1(db);
+    return drizzleD1(db, { schema });
 }
 
 export async function getAdapter(ctx: APIContext): Promise<Adapter> {
