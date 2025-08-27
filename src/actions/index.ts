@@ -2,26 +2,44 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import type { Props as CardProps } from "../components/Card.astro";
 import { getDatabase } from "../db/connection";
-import { and, eq } from "drizzle-orm";
+import { and, eq, like, SQL, sql, type SQLWrapper } from "drizzle-orm";
 import { tracks } from "../db/schema";
+import type { AnySQLiteColumn } from "drizzle-orm/sqlite-core";
+
+function lower(email: AnySQLiteColumn): SQL {
+    return sql`lower(${email})`;
+}
 
 export const server = {
     getCards: defineAction({
         input: z.object({
             // Since pages are exposed to the URL, we make pages start at 1.
             page: z.number().min(1),
+            // search parameter: what mapper are we looking for?
+            // (currently only used in the dashboard)
             mapper: z.string().optional(),
+            // search parameter: (case-insensitive) does the title have this?
+            inTitle: z.string().optional()
         }),
-        handler: async ({ page, mapper }, ctx) => {
+        handler: async ({ page, mapper, inTitle }, ctx) => {
             // TODO: tracksPerPage customization?
             const tracksPerPage = 20;
 
             const db = await getDatabase(ctx);
 
-            let where = [];
-            // This is here for the dashboard right now, could be used for filtering by mapper in the future
+            let where: SQLWrapper[] = [];
+            // This is here for the dashboard right now,
+            // though could be used for filtering by mapper in the future
             if (mapper) {
                 where.push(eq(tracks.mapper, mapper!))
+            }
+
+            if (inTitle !== undefined && inTitle !== '') {
+                // TODO i really don't like this % wrapping - is this even safe?
+                where.push(like(lower(tracks.title), `%${
+                    inTitle.replaceAll("%", "\\%")
+                        .replaceAll("_", "\\_")
+                }%`))
             }
 
             // TODO: sorting?

@@ -10,17 +10,22 @@ const session = await getSession(Astro);
 const { page } = Astro.params;
 if (page === undefined) throw Error("A page number must be specified.");
 const parsedPage = parseInt(page); // TODO: error handling
+
+const search = Astro.url.searchParams.get('q') || undefined;
 ---
 
 <BaseLayout>
     <Header authenticated={!!session} />
     <main>
-        <input id="search" type="text" placeholder="Search..." />
+        <form action="." method="GET">
+            <input name="q" id="search" type="text" placeholder="Search..." value={search} />
+        </form>
         <LevelsContainer
             page={parsedPage}
             root="/page/"
             session={session ? session : undefined}
-            dash={false}
+            inDashboard={false}
+            inTitle={search}
         />
     </main>
     <Footer />

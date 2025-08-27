@@ -1,7 +1,6 @@
 ---
 import PixelarticonsArrowLeft from "~icons/pixelarticons/arrow-left";
 import PixelarticonsArrowRight from "~icons/pixelarticons/arrow-right";
-import type { Props as CardProps } from "./Card.astro";
 import Card from "./Card.astro";
 import { actions } from "astro:actions";
 import type { Session } from "@auth/core/types";
@@ -10,17 +9,20 @@ interface Props {
     page: number;
     root: string;
     session?: Session;
-    dash: boolean;
+
+    inDashboard: boolean;
+    inTitle?: string;
 }
 
 // session to allow the user to edit their own maps
-const { page, root, session, dash } = Astro.props;
+const { page, root, session, inDashboard, inTitle } = Astro.props;
 
 const { data, error } = await Astro.callAction(actions.getCards, {
     page,
     // Grab only the charts by the user if on the dashboard
     // mapper: (root == "/dashboard/")? session?.user?.id? session.user.id : undefined : undefined
-    mapper: dash ? session?.user?.id! : undefined,
+    mapper: inDashboard ? session?.user?.id! : undefined,
+    inTitle
 });
 
 if (error) {
