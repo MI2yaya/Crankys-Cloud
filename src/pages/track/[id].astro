@@ -3,8 +3,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import { getSession } from "auth-astro/server";
 import { getDatabase } from "../../db/connection";
-import { eq } from 'drizzle-orm';
-import { tracks } from '../../db/schema'
+import { eq } from "drizzle-orm";
+import { tracks } from "../../db/schema";
+import { Image } from "astro:assets";
+import placeholder from "./placeholder.gif";
 
 const session = await getSession(Astro);
 const db = await getDatabase(Astro);
@@ -14,8 +16,16 @@ const { id } = Astro.params;
 if (!id) return new Response(null, { status: 404 });
 
 const song = await db.query.tracks.findFirst({
-    where: eq(tracks.id, id)
-})
+    where: eq(tracks.id, id),
+    with: {
+        mapper: true,
+    },
+});
+
+let hideManage = true;
+if (song?.mapper.id == session?.user?.id) {
+    hideManage = false;
+}
 
 if (!song) return new Response(null, { status: 404 });
 ---
@@ -24,31 +34,87 @@ if (!song) return new Response(null, { status: 404 });
     <Header authenticated={!!session} />
     <div class="container">
         <main>
-            <h1>{song.title}</h1>
-
-            <p>Artist: {song.author}</p>
-            <!-- TODO: this is mapper ID -->
-            <p>Mapper: {song.mapper}</p>
-            
+            <div class="banner">
+                <Image
+                    src={placeholder}
+                    alt="super cool skeleto- NOOO IT FELL!!!!"
+                    fit="cover"
+                    layout="fixed"
+                    class="bannerImage"
+                />
+            </div>
+            <div class="underBanner">
+                <h1 class="left title">{song.title}</h1>
+                <p class="right artist">Artist: {song.author}</p>
+                <!-- TODO: this is mapper ID -->
+                <p class="right mapper">
+                    Mapper: <a href={"/user/" + song.mapper.id}> {song.mapper.name}</a>
+                </p>
+            </div>
             <p class="description">{song.description}</p>
             <!-- TODO: rest of song fields -->
+
+            <div class="manage">
+            <h1>Manage</h1>
+                <delete-section data-session={session} data-trackID={id}>
+                    <button data-delete >Delete This Chart</button>
+                </delete-section>
+            </div>
         </main>
     </div>
 </BaseLayout>
 
+<script src="./index.ts">
+</script>
+
+{hideManage && <style> .manage { visibility: hidden} </style>}
 <style>
     div.container {
         display: flex;
         justify-content: center;
     }
 
+    a {
+        color: black;
+    }
+    .banner {
+        width: 100%;
+        height: 250px;
+        border: 2px solid black;
+        overflow: hidden;
+    }
+    .bannerImage {
+        width: 100%;
+    }
+    .underBanner {
+        position: relative;
+        height: max-content;
+    }
+
+    .left {
+        left: 8px;
+    }
+    .right {
+        position: absolute;
+        right: 8px;
+    }
+    .artist {
+        bottom: 0px;
+    }
+    .mapper {
+        bottom: 22px;
+    }
+
     .description {
         border: 2px solid black;
+        background: white;
         padding: 1rem;
+        top: 50px;
     }
 
     main {
-        max-width: 80ch;
-        width: 80ch;
+        max-width: 100ch;
+        width: 100ch;
     }
+
 </style>
