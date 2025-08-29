@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro);
+---
+
+<BaseLayout>
+    <Header authenticated={!!session} />
+    <div class="container">
+        <main>
+            <h1>Page Not Found</h1>
+            <p>{Astro.url.pathname}</p>
+        </main>
+    </div>
+</BaseLayout>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    main {
+        width: 80ch;
+        max-width: 80ch;
+        text-align: center;
+    }
+</style>
