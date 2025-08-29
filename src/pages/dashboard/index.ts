@@ -12,7 +12,6 @@ class UploadSection extends HTMLElement {
     form.addEventListener("formdata", async (e) => {
       const data = e.formData.get("file") as File;
       const zipName = data.name;
-      const user = this.dataset.user as string;
 
       // TODO: handle errors when manifest and level aren't found
       const zip = await JSZip.loadAsync(await data.bytes());
@@ -34,7 +33,6 @@ class UploadSection extends HTMLElement {
       await fetch("/api/upload", {
         headers: {
           "Content-Type": "application/json",
-          user: user,
           zipName,
           meta,
         },
