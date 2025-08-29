@@ -65,6 +65,11 @@ const { tracks, nextPage } = data;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+
+            &:not(&[href]) {
+                color: gray;
+                cursor: default;
+            }
         }
     }
 

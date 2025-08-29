@@ -1,4 +1,12 @@
-<button id="logout">logout</button>
+---
+interface Props {
+  text?: string
+}
+
+const { text = "logout" } = Astro.props;
+---
+
+<button id="logout">{text}</button>
 
 <script>
     import { signOut } from "auth-astro/client";
