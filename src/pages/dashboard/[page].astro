@@ -47,6 +47,7 @@ const parsedPage = parseInt(page); // TODO: error handling
 </BaseLayout>
 <script src="./index.ts"></script>
 
+
 <style lang="scss">
     .container {
         display: flex;
@@ -55,13 +56,10 @@ const parsedPage = parseInt(page); // TODO: error handling
     }
 
     main {
-        margin: auto;
-        flex-grow: 1;
-
-        // I want to preserve the semantic `main` here, so we're nesting into flex
-        // again for `.levelsContainer` to take only the remaining height
+        flex: 1; 
         display: flex;
         flex-direction: column;
+        min-height: 0;
     }
 
     .userCard {

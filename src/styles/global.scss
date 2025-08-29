@@ -34,12 +34,16 @@ button {
 
 body,
 html {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     padding: 0;
     margin: 0;
 
     // make `main` take up the actual remaining space.
     display: flex;
     flex-direction: column;
+}
+main{
+    //height must be set to 0 to allow flex-grow to work properly.
+    min-height: 0;
 }
