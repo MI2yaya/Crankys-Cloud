@@ -37,10 +37,11 @@ if (session) {
 
 <script>
     import { signIn } from "auth-astro/client";
-    // TODO: discord auth
     const githubLoginButton = document.querySelector("#github")!;
+    const discordLoginButton = document.querySelector("#discord")!;
 
     githubLoginButton.addEventListener("click", () => signIn("github"));
+    discordLoginButton.addEventListener("click", () => signIn("discord"));
 </script>
 
 <style lang="scss">
