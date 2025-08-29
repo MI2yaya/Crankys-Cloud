@@ -12,29 +12,34 @@ class UploadSection extends HTMLElement {
     form.addEventListener("formdata", async (e) => {
       const data = e.formData.get("file") as File;
       const zipName = data.name;
-      const user = this.dataset.user as string;
 
       // TODO: handle errors when manifest and level aren't found
       const zip = await JSZip.loadAsync(await data.bytes());
       const manifest = zip.file(zipName?.replace(".zip", "") + "/manifest.json");
       if (!manifest) {
         console.log("no manifest.json found for " + zipName);
-        return;
       }
 
       // TODO: handle case-sensitivites in file uploads
       const level= zip.file(zipName?.replace(".zip", "") + "/level.json");
       if (!level) {
         console.log("no level.json found for " + zipName);
-        return;
+
+        if (!manifest) {
+          return;
+        }
       }
 
-      const meta = await manifest.async("string");
+      const meta = await (manifest? manifest?.async("string") : level?.async("string"));
+
+      if (!meta) {
+        console.log("No Metadata found!");
+        return;
+      }
 
       await fetch("/api/upload", {
         headers: {
           "Content-Type": "application/json",
-          user: user,
           zipName,
           meta,
         },

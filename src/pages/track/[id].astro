@@ -56,7 +56,7 @@ if (!song) return new Response(null, { status: 404 });
 
             <div class="manage">
             <h1>Manage</h1>
-                <delete-section data-session={session} data-trackID={id}>
+                <delete-section data-id={id}>
                     <button data-delete >Delete This Chart</button>
                 </delete-section>
             </div>
