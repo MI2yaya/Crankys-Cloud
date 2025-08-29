@@ -14,7 +14,8 @@
         "preview": "wrangler dev",
         "deploy": "wrangler deploy",
         "wdev": "pnpm run build && pnpm run db:migrate:local && pnpm run preview",
-        "wdev-host": "pnpm run build && pnpm run db:migrate:local && wrangler dev --ip 127.0.0.1 --port 4321"
+        "wdev-host": "pnpm run build && pnpm run db:migrate:local && wrangler dev --ip 127.0.0.1 --port 4321",
+        "minio": "./minio server data"
     },
     "dependencies": {
         "@astrojs/cloudflare": "^12.6.4",
@@ -28,6 +29,7 @@
     "devDependencies": {
         "@auth/d1-adapter": "^1.10.0",
         "@auth/drizzle-adapter": "^1.10.0",
+        "@aws-sdk/client-s3": "^3.878.0",
         "@iconify-json/pixelarticons": "^1.2.2",
         "cross-env": "^10.0.0",
         "dotenv": "^17.2.1",

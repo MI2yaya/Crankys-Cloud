@@ -34,3 +34,17 @@ local development.)
 
 We use the in-memory SQLite database for development, which should require no extra configuration
 other than the above environment variables. Us e
+
+#### minio
+
+We use `minio` for a local `S3` development environment. 
+
+We recommend the [binary setup for minio](https://github.com/minio/minio?tab=readme-ov-file#binary-download). For linux-amd64, this looks something as so:
+
+```
+wget https://dl.min.io/server/minio/release/linux-amd64/minio
+chmod +x minio
+```
+
+The helper `pnpm run minio` command is configured for linux binaries, but otherwise
+works out of the box when run alongside `pnpm run dev`.
