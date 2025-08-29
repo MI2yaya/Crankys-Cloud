@@ -1,4 +1,15 @@
 import JSZip from "jszip";
+
+console.log(`Hi there!
+
+We don't do any server-side validation of ZIP files (yet),
+since we don't have enough compute power to do so.
+
+If you're trying to manually upload a ZIP file for
+legitimate reasons, please let us know about your use
+case on the Cranky's Customs discord server.
+`)
+
 class UploadSection extends HTMLElement {
   constructor() {
     super();

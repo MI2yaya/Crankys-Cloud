@@ -4,6 +4,7 @@ import Header from "../../components/Header.astro";
 import { getSession } from "auth-astro/server";
 import Logout from "../../components/Logout.astro";
 import LevelsContainer from "../../components/LevelsContainer.astro";
+import FileDrop from "../../components/FileDrop.astro";
 
 const session = await getSession(Astro);
 if (!session) {
@@ -18,32 +19,34 @@ const parsedPage = parseInt(page); // TODO: error handling
 ---
 
 <BaseLayout>
-    <upload-section data-user={userID}>
-        <div class="container">
-            <Header authenticated={!!session} />
-            <main>
-                <h1>Dashboard</h1>
-                <div class="userCard">
-                    <img src={session.user?.image} />
-                    <div class="info">
-                        <h2>{userName}</h2>
-                        <a href="/dashboard/account">Manage account</a>
-                        <Logout text="Logout" />
-                    </div>
+    <div class="container">
+        <Header authenticated={!!session} />
+        <main>
+            <h1>Dashboard</h1>
+            <div class="userCard">
+                <img src={session.user?.image} />
+                <div class="info">
+                    <h2>{userName}</h2>
+                    <a href="/dashboard/account">Manage account</a>
+                    <Logout text="Logout" />
                 </div>
+            </div>
+            <h2>Upload Track</h2>
+            <upload-section data-user={userID}>
                 <form data-upload>
-                    <input type="file" name="file" accept=".zip" />
+                    <FileDrop />
                     <button type="submit">Upload</button>
                 </form>
-                <LevelsContainer
-                    page={parsedPage}
-                    root="/dashboard/"
-                    session={session}
-                    inDashboard={true}
-                />
-            </main>
-        </div>
-    </upload-section>
+            </upload-section>
+            <h2>My Tracks</h2>
+            <LevelsContainer
+                page={parsedPage}
+                root="/dashboard/"
+                session={session}
+                inDashboard={true}
+            />
+        </main>
+    </div>
 </BaseLayout>
 <script src="./index.ts"></script>
 
@@ -62,10 +65,13 @@ const parsedPage = parseInt(page); // TODO: error handling
         // again for `.levelsContainer` to take only the remaining height
         display: flex;
         flex-direction: column;
+
+        // Width of a card + the border.
+        max-width: calc(480px + 4px);
     }
 
     .userCard {
-        max-width: 80ch;
+        width: calc(480px + 4px);
         display: flex;
         margin-bottom: 1rem;
 

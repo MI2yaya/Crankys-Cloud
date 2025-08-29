@@ -13,9 +13,30 @@ export interface Props {
     link: string;
 
     mapperId: string;
+
+    // Useful for when in dashboard
+    showMapper?: boolean;
+
+    // TODO: actually handle
+    /**
+     * For when a track is owned by the current user - we visibly
+     * disable the upvote/downvote button in this case
+     */
+    isOwned?: boolean;
 }
 
-const { title, author, mapper, image, id, score, link, mapperId } = Astro.props;
+const {
+    title,
+    author,
+    mapper,
+    image,
+    id,
+    score,
+    link,
+    mapperId,
+    showMapper = true,
+    isOwned = false
+} = Astro.props;
 ---
 
 <div data-id={id} class="card" style={`background: no-repeat 100%/100% url(${image}), white`}>
@@ -25,7 +46,7 @@ const { title, author, mapper, image, id, score, link, mapperId } = Astro.props;
         <div class="contentInner">
             <h2><a href={`/track/${id}`}>{title}</a></h2>
             <p>by: {author}</p>
-            <p>mapper: <a href={`/user/${mapperId}`}>{mapper}</a></p>
+            {showMapper && <p>mapper: <a href={`/user/${mapperId}`}>{mapper}</a></p>}
             <p>Difficulty</p>
         </div>
         <div class="actions">

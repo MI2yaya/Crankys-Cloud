@@ -20,7 +20,6 @@ const { page, root, session, inDashboard, inTitle } = Astro.props;
 const { data, error } = await Astro.callAction(actions.getCards, {
     page,
     // Grab only the charts by the user if on the dashboard
-    // mapper: (root == "/dashboard/")? session?.user?.id? session.user.id : undefined : undefined
     mapper: inDashboard ? session?.user?.id! : undefined,
     inTitle
 });
@@ -34,7 +33,7 @@ const { tracks, nextPage } = data;
 
 <div class="levelsContainer">
     <div id="levels">
-        {tracks.map((card) => <Card {...card} />)}
+        {tracks.map((card) => <Card {...card} showMapper={!inDashboard} />)}
     </div>
 </div>
 <div class="navigation">
