@@ -46,7 +46,6 @@ if (!song) return new Response(null, { status: 404 });
             <div class="underBanner">
                 <h1 class="left title">{song.title}</h1>
                 <p class="right artist">Artist: {song.author}</p>
-                <!-- TODO: this is mapper ID -->
                 <p class="right mapper">
                     Mapper: <a href={"/user/" + song.mapper.id}> {song.mapper.name}</a>
                 </p>
