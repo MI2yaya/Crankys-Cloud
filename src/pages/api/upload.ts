@@ -6,9 +6,14 @@ import { eq } from "drizzle-orm";
 import { getSession } from "auth-astro/server";
 
 export const POST: APIRoute = async (ctx): Promise<Response> => {
-  const zipName = ctx.request.headers.get("zipName");
   const session = await getSession(ctx);
-  const meta = JSON.parse(ctx.request.headers.get("meta") as string).metadata;
+  const _difficulty = ctx.request.headers.get("difficulty");
+  const difficulty = _difficulty? JSON.parse(_difficulty) : undefined;
+  const _meta = ctx.request.headers.get("meta")!;
+  console.log(_meta);
+  const meta = JSON.parse(_meta);
+
+  console.log(difficulty);
 
   if (!session?.user?.id) {
     return new Response("No User ID" , {
@@ -24,6 +29,7 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
       author: meta.artist as string,
       description: meta.description as string,
       mapper: session?.user?.id,
+      difficulty: difficulty? JSON.stringify(difficulty) : undefined, 
       image: "",
       link: "",
     })

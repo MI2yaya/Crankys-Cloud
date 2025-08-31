@@ -7,6 +7,7 @@ export interface Props {
     title: string;
     author: string;
     mapper: string;
+    difficulty?: string;
     image: string;
     id: string;
     score: number;
@@ -29,14 +30,31 @@ const {
     title,
     author,
     mapper,
+    difficulty,
     image,
     id,
     score,
     link,
     mapperId,
     showMapper = true,
-    isOwned = false
+    isOwned = false,
 } = Astro.props;
+
+const _difficulty = (
+    difficulty ? JSON.parse(difficulty) : [{ name: "----", value: undefined }]
+) as [{ name: string | undefined; value: string | undefined }];
+
+const difficulties = _difficulty.map((diff) => {
+    if (diff.name && diff.value) {
+        return diff.name + " " + diff.value;
+    } else if (diff.name && !diff.value) {
+        return diff.name;
+    } else if (!diff.name && diff.value) {
+        return diff.value;
+    } else {
+        return "----";
+    }
+});
 ---
 
 <div data-id={id} class="card" style={`background: no-repeat 100%/100% url(${image}), white`}>
@@ -46,8 +64,25 @@ const {
         <div class="contentInner">
             <h2><a href={`/track/${id}`}>{title}</a></h2>
             <p>by: {author}</p>
-            {showMapper && <p>mapper: <a href={`/user/${mapperId}`}>{mapper}</a></p>}
-            <p>Difficulty</p>
+            {
+                showMapper && (
+                    <p>
+                        mapper: <a href={`/user/${mapperId}`}>{mapper}</a>
+                    </p>
+                )
+            }
+            <p>
+                {difficulties?.length! > 1 ? "Difficulties: " : "Difficulty: "}
+                {
+                    difficulties.map((diff, i) => {
+                        if (i == 0) {
+                            return diff;
+                        } else {
+                            return <p>{diff}</p>;
+                        }
+                    })
+                }
+            </p>
         </div>
         <div class="actions">
             <button>
@@ -113,7 +148,8 @@ const {
                     font-size: 24px;
                 }
 
-                button, a {
+                button,
+                a {
                     background: none;
                     border: none;
                     padding: 0;

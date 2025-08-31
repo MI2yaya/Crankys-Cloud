@@ -24,6 +24,7 @@
         "astro": "^5.13.2",
         "auth-astro": "^4.2.0",
         "drizzle-orm": "^0.44.4",
+        "encoding-japanese": "^2.2.0",
         "sass": "^1.90.0"
     },
     "devDependencies": {
@@ -31,6 +32,7 @@
         "@auth/drizzle-adapter": "^1.10.0",
         "@aws-sdk/client-s3": "^3.878.0",
         "@iconify-json/pixelarticons": "^1.2.2",
+        "@types/encoding-japanese": "^2.2.1",
         "cross-env": "^10.0.0",
         "dotenv": "^17.2.1",
         "drizzle-kit": "^0.31.4",

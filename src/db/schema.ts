@@ -108,6 +108,7 @@ export const tracks = sqliteTable("tracks", {
     // Name of the song artist
     author: text("author"),
     description: text("description"),
+    difficulty: text("difficulty"),
     mapper: text("userId")
         .notNull()
         // TODO: do we delete songs if a user deletes themselves?

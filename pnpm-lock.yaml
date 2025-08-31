@@ -31,6 +31,9 @@ importers:
       drizzle-orm:
         specifier: ^0.44.4
         version: 0.44.4(@cloudflare/workers-types@4.20250823.0)(@libsql/client@0.15.12)
+      encoding-japanese:
+        specifier: ^2.2.0
+        version: 2.2.0
       sass:
         specifier: ^1.90.0
         version: 1.90.0
@@ -47,6 +50,9 @@ importers:
       '@iconify-json/pixelarticons':
         specifier: ^1.2.2
         version: 1.2.2
+      '@types/encoding-japanese':
+        specifier: ^2.2.1
+        version: 2.2.1
       cross-env:
         specifier: ^10.0.0
         version: 10.0.0
@@ -1476,6 +1482,9 @@ packages:
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
+  '@types/encoding-japanese@2.2.1':
+    resolution: {integrity: sha512-6jjepuTusvySxMLP7W6usamlbgf0F4sIDvm7EzYePjLHY7zWUv4yz2PLUnu0vuNVtXOTLu2cRdFcDg40J5Owsw==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -1876,6 +1885,10 @@ packages:
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
+  encoding-japanese@2.2.0:
+    resolution: {integrity: sha512-EuJWwlHPZ1LbADuKTClvHtwbaFn4rOD+dRAbWysqEOXRc2Uui0hJInNJrsdH0c+OhJA4nrCBdSkW4DD5YxAo6A==}
+    engines: {node: '>=8.10.0'}
 
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
@@ -4594,6 +4607,8 @@ snapshots:
     dependencies:
       '@types/ms': 2.1.0
 
+  '@types/encoding-japanese@2.2.1': {}
+
   '@types/estree@1.0.8': {}
 
   '@types/fontkit@2.0.8':
@@ -4947,6 +4962,8 @@ snapshots:
   emoji-regex@10.4.0: {}
 
   emoji-regex@8.0.0: {}
+
+  encoding-japanese@2.2.0: {}
 
   entities@6.0.1: {}
 

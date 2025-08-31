@@ -63,6 +63,7 @@ export const server = {
                     score: track.upvotes.length - track.downvotes.length,
                     title: track.title,
                     mapper: track.mapper.name ?? "(Unnamed)",
+                    difficulty: track.difficulty,
                     id: track.id,
                     author: track.author ?? "(Unknown)",
                     image: track.image ?? "/textures/default.png",
