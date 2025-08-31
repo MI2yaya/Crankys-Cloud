@@ -74,20 +74,26 @@ const { tracks, nextPage } = data;
 
     .levelsContainer {
         border: 2px solid black;
-        border-bottom: none;
         flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+
+        //hide scrollbar
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        scrollbar-width: none;
     }
 
     #levels {
         width: 100%;
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(2, 1fr);
 
         max-height: 100%;
 
-        // To create the impression of a 2px border between elements
-        gap: 2px;
-        background-color: black;
-        border-bottom: 2px solid black;
+        // switched to rem
+        gap: 1rem;
+        padding: 1rem;
     }
 </style>
