@@ -45,7 +45,9 @@ const _difficulty = (
 ) as [{ name: string | undefined; value: string | undefined }];
 
 const difficulties = _difficulty.map((diff) => {
-    if (diff.name && diff.value) {
+    if (diff.name == "----") {
+        return "----";
+    } else if (diff.name && diff.value) {
         return diff.name + " " + diff.value;
     } else if (diff.name && !diff.value) {
         return diff.name;
@@ -114,21 +116,13 @@ const difficulties = _difficulty.map((diff) => {
             h2 {
                 margin-bottom: 0.5rem;
             }
-            h2 a {
-                display: block;
-                white-space: nowrap;      
-                overflow: hidden;     
-                text-overflow: ellipsis;   // show "…" at the end
-                max-width: 100%;           // ensure it doesn't overflow container
-                margin-bottom: 10px;
-            }
 
             display: flex;
             justify-content: space-between;
         }
 
         div.content {
-            text-align: left;
+            text-align: right;
             width: 50%;
             background-color: rgba(255, 255, 255, 0.9);
 
@@ -142,11 +136,11 @@ const difficulties = _difficulty.map((diff) => {
 
             .actions {
                 width: 100%;
-                background-color: rgb(233, 233, 233);
+                background-color: white;
                 padding: 6px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: right;
 
                 .sep {
                     width: 8px;
