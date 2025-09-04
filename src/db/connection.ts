@@ -23,8 +23,8 @@ async function getDevDatabaseUnmemoized(): Promise<LibSQLDatabase<typeof schema>
                 }),
                 author: f.firstName(),
                 difficulty: f.valuesFromArray({
-                    values: [JSON.stringify([{ value: 6 }])]
-                })
+                    values: [JSON.stringify([{ value: 6 }])],
+                }),
             },
         },
     }));

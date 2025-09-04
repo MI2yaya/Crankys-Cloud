@@ -11,7 +11,7 @@ const { page } = Astro.params;
 if (page === undefined) throw Error("A page number must be specified.");
 const parsedPage = parseInt(page); // TODO: error handling
 
-const search = Astro.url.searchParams.get('q') || undefined;
+const search = Astro.url.searchParams.get("q") || undefined;
 ---
 
 <BaseLayout>

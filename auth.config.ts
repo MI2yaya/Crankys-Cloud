@@ -12,7 +12,7 @@ export default defineConfig(async (ctx) => ({
         Discord({
             clientId: import.meta.env.DISCORD_CLIENT_ID,
             clientSecret: import.meta.env.DISCORD_CLIENT_SECRET,
-        })
+        }),
     ],
     adapter: await getAdapter(ctx),
     callbacks: {

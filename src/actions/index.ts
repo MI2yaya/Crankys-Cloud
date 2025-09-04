@@ -19,7 +19,7 @@ export const server = {
             // (currently only used in the dashboard)
             mapper: z.string().optional(),
             // search parameter: (case-insensitive) does the title have this?
-            inTitle: z.string().optional()
+            inTitle: z.string().optional(),
         }),
         handler: async ({ page, mapper, inTitle }, ctx) => {
             // TODO: tracksPerPage customization?
@@ -31,15 +31,17 @@ export const server = {
             // This is here for the dashboard right now,
             // though could be used for filtering by mapper in the future
             if (mapper) {
-                where.push(eq(tracks.mapper, mapper!))
+                where.push(eq(tracks.mapper, mapper!));
             }
 
-            if (inTitle !== undefined && inTitle !== '') {
+            if (inTitle !== undefined && inTitle !== "") {
                 // TODO i really don't like this % wrapping - is this even safe?
-                where.push(like(lower(tracks.title), `%${
-                    inTitle.replaceAll("%", "\\%")
-                        .replaceAll("_", "\\_")
-                }%`))
+                where.push(
+                    like(
+                        lower(tracks.title),
+                        `%${inTitle.replaceAll("%", "\\%").replaceAll("_", "\\_")}%`,
+                    ),
+                );
             }
 
             // TODO: sorting?
@@ -57,7 +59,7 @@ export const server = {
                 offset: (page - 1) * tracksPerPage,
             });
 
-            const finalTracks: (CardProps["data"])[] = paginatedTracks
+            const finalTracks: CardProps["data"][] = paginatedTracks
                 .slice(0, tracksPerPage)
                 .map((track) => ({
                     score: track.upvotes.length - track.downvotes.length,
@@ -71,7 +73,7 @@ export const server = {
                     // TODO: we want to notNull this
                     link: track.link!,
 
-                    mapperId: track.mapper.id
+                    mapperId: track.mapper.id,
                 }));
 
             return {

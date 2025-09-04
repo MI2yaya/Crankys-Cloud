@@ -15,7 +15,7 @@ export interface Props {
         link: string;
 
         mapperId: string;
-    }
+    };
 
     // Useful for when in dashboard
     showMapper?: boolean;
@@ -29,17 +29,7 @@ export interface Props {
 }
 
 const {
-    data: {
-        title,
-        author,
-        mapper,
-        difficulty,
-        image,
-        id,
-        score,
-        link,
-        mapperId,
-    },
+    data: { title, author, mapper, difficulty, image, id, score, link, mapperId },
     showMapper = true,
     isOwned = false,
 } = Astro.props;

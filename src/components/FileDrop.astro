@@ -26,8 +26,8 @@
         dropZoneTitle.innerText = `To upload: ${file.name}`;
     }
 
-    fileInput.addEventListener('change', () => updateFiles())
-    
+    fileInput.addEventListener("change", () => updateFiles());
+
     dropZone.addEventListener("drop", (event) => {
         dragPrevent(event);
 
@@ -35,8 +35,8 @@
         const files = dt?.files;
 
         if (files) {
-            fileInput.files = files
-            updateFiles()
+            fileInput.files = files;
+            updateFiles();
         }
     });
 

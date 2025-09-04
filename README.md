@@ -39,7 +39,7 @@ other than the above environment variables. Us e
 
 #### minio
 
-We use `minio` for a local `S3` development environment. 
+We use `minio` for a local `S3` development environment.
 
 We recommend the [binary setup for minio](https://github.com/minio/minio?tab=readme-ov-file#binary-download). For linux-amd64, this looks something as so:
 
