@@ -21,7 +21,10 @@ async function getDevDatabaseUnmemoized(): Promise<LibSQLDatabase<typeof schema>
                 image: f.valuesFromArray({
                     values: ["/textures/default.png"],
                 }),
-                author: f.firstName()
+                author: f.firstName(),
+                difficulty: f.valuesFromArray({
+                    values: [JSON.stringify([{ value: 6 }])]
+                })
             },
         },
     }));
