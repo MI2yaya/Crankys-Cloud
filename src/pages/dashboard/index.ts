@@ -80,6 +80,7 @@ class UploadSection extends HTMLElement {
         })
 
       } else {
+        // TODO: shared difficulty logic between this and Card.astro in a separate file?
         let diffValue = json.metadata.difficulty;
         let diffName;
 

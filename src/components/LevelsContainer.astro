@@ -33,7 +33,7 @@ const { tracks, nextPage } = data;
 
 <div class="levelsContainer">
     <div id="levels">
-        {tracks.map((card) => <Card {...card} showMapper={!inDashboard} />)}
+        {tracks.map((card) => <Card data={card} showMapper={!inDashboard} />)}
     </div>
 </div>
 <div class="navigation">

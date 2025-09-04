@@ -4,16 +4,18 @@ import PixelarticonsArrowUp from "~icons/pixelarticons/arrow-up";
 import PixelarticonsArrowDown from "~icons/pixelarticons/arrow-down";
 
 export interface Props {
-    title: string;
-    author: string;
-    mapper: string;
-    difficulty?: string;
-    image: string;
-    id: string;
-    score: number;
-    link: string;
+    data: {
+        title: string;
+        author: string;
+        mapper: string;
+        difficulty?: string;
+        image: string;
+        id: string;
+        score: number;
+        link: string;
 
-    mapperId: string;
+        mapperId: string;
+    }
 
     // Useful for when in dashboard
     showMapper?: boolean;
@@ -27,15 +29,17 @@ export interface Props {
 }
 
 const {
-    title,
-    author,
-    mapper,
-    difficulty,
-    image,
-    id,
-    score,
-    link,
-    mapperId,
+    data: {
+        title,
+        author,
+        mapper,
+        difficulty,
+        image,
+        id,
+        score,
+        link,
+        mapperId,
+    },
     showMapper = true,
     isOwned = false,
 } = Astro.props;
