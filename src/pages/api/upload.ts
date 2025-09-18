@@ -16,29 +16,56 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
 
   const fileData = await ctx.request.arrayBuffer();
 
+
   if (!session?.user?.id) {
-    return new Response("No User ID", {
-      status: 400
+    return new Response("", {
+      status: 400,
+      statusText: "No User ID found"
     })
   }
 
+  const Bucket = "charts-raging-kerosene-untie-unless-duvet-hundredth";
   const Key = session.user.id! + "_" + zipName + ".zip";
-  const client = new S3Client({
-    endpoint: "http://localhost:9000",
-    region: "us-east-1",
-    credentials: {
-      accessKeyId: getEnv("MINIO_KEY_ID")!,
-      secretAccessKey: getEnv("MINIO_SECRET_KEY")!,
-    },
-    forcePathStyle: true // required for minio
-  });
-  const Bucket = "charts";
+
+  const createClient = () => {
+    if (getEnv("S3_BUCKET") == "minio") {
+      return new S3Client({
+        endpoint: "http://localhost:9000",
+        region: "us-east-1",
+        credentials: {
+          accessKeyId: getEnv("MINIO_KEY_ID")!,
+          secretAccessKey: getEnv("MINIO_SECRET_KEY")!,
+        },
+        forcePathStyle: true // required for minio
+      });
+    } else if (getEnv("S3_BUCKET") == "backblaze") {
+      return new S3Client({
+        endpoint: "https://s3.us-east-005.backblazeb2.com/",
+        region: "us-east-005",
+        credentials: {
+          accessKeyId: getEnv("B2_KEY_ID")!,
+          secretAccessKey: getEnv("B2_APP_KEY")!
+        },
+        forcePathStyle: true 
+      });
+    }
+  }
+  const client = createClient();
+
+  if (!client) {
+    return new Response("", {
+      status: 500,
+      statusText: "s3 Client could not be created",
+    })
+  }
 
   try {
-    await client.send(new HeadObjectCommand({
+    const command = new HeadObjectCommand({
       Bucket,
-      Key 
-    }))
+      Key
+    });
+
+    await client.send(command)
     // this shoud return error so user can update the file instead?
     return new Response("", {
       status: 500,
@@ -48,17 +75,22 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
     // catch
   }
 
-  const command = new PutObjectCommand({
-    Bucket,
-    Key,
-    Body: Buffer.from(fileData)
-  });
 
   try {
+    const command = new PutObjectCommand({
+      Bucket,
+      Key,
+      Body: Buffer.from(fileData)
+    });
+
     const res = await client.send(command);
     console.log("Success: ", res)
-  } catch(err) {
+  } catch (err) {
     console.error("Error: ", err)
+    return new Response("", {
+      status: 403,
+      statusText: "Upload Error: " + err
+    })
   }
 
 
@@ -78,7 +110,7 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
     .returning()
     .execute();
 
-    return new Response("", {
-        status: 200,
-    });
+  return new Response("", {
+    status: 200,
+  });
 };

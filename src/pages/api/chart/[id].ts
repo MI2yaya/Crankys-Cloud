@@ -7,16 +7,44 @@ import { eq } from "drizzle-orm";
 import { tracks } from "../../../db/schema";
 
 export const GET: APIRoute = async (ctx): Promise<Response> => { 
-  const client = new S3Client({
-    endpoint: "http://localhost:9000",
-    region: "us-east-1",
-    credentials: {
-      accessKeyId: getEnv("MINIO_KEY_ID")!,
-      secretAccessKey: getEnv("MINIO_SECRET_KEY")!,
-    },
-    forcePathStyle: true // required for minio
-  });
-  const Bucket = "charts";
+  const endpoint = getEnv("S3_ENDPOINT")!;
+  const region = getEnv("S3_REGION")!;
+  const accessKeyId = getEnv("ACCESS_KEY_ID")!;
+  const secretAccessKey = getEnv("SECRET_ACCESS_KEY")!;
+
+  const createClient = () => {
+    if (getEnv("S3_BUCKET") == "minio") {
+      return new S3Client({
+        endpoint: "http://localhost:9000",
+        region: "us-east-1",
+        credentials: {
+          accessKeyId: getEnv("MINIO_KEY_ID")!,
+          secretAccessKey: getEnv("MINIO_SECRET_KEY")!,
+        },
+        forcePathStyle: true // required for minio
+      });
+    } else if (getEnv("S3_BUCKET") == "backblaze") {
+      return new S3Client({
+        endpoint: "https://s3.us-east-005.backblazeb2.com/",
+        region: "us-east-005",
+        credentials: {
+          accessKeyId: getEnv("B2_KEY_ID")!,
+          secretAccessKey: getEnv("B2_APP_KEY")!
+        },
+        forcePathStyle: true 
+      });
+    }
+  }
+  const client = createClient();
+
+  if (!client) {
+    return new Response("", {
+      status: 500,
+      statusText: "s3 Client could not be created",
+    })
+  }
+
+  const Bucket = "charts-raging-kerosene-untie-unless-duvet-hundredth";
 
   const db = await getDatabase(ctx);
   const chartInfo = await db.query.tracks.findFirst({ where: eq(tracks.id, ctx.params.id!)}).execute();
