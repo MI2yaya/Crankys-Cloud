@@ -1,7 +1,6 @@
 import JSZip from "jszip";
 import Encoding from "encoding-japanese";
-import { HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getEnv } from "astro/env/runtime";
+import type { boolean } from "astro:schema";
 
 console.log(`Hi there!
 
@@ -36,6 +35,7 @@ class UploadSection extends HTMLElement {
     });
 
     form.addEventListener("formdata", async (e) => {
+      const isEarlyAccess = e.formData.get("isEarlyAccess") as string == "true" ? true : false;
       const data = e.formData.get("file") as File;
 
       // TODO: handle errors when manifest and level aren't found
@@ -131,6 +131,7 @@ class UploadSection extends HTMLElement {
       headers.append('meta', __meta);
       headers.append('zipName', zipName);
       headers.append('difficulty', JSON.stringify(difficulty))
+      headers.append('version', isEarlyAccess? "earlyAccess" : "beta");
 
       await fetch("/api/upload", {
         headers: headers,

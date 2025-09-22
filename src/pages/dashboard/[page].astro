@@ -34,6 +34,8 @@ const parsedPage = parseInt(page); // TODO: error handling
             <h2>Upload Track</h2>
             <upload-section data-user={userID}>
                 <form data-upload>
+                    <input type="checkbox" class="isEarlyAccess" name="isEa" />
+                    <label for="isEa">Is this charted in Early Access?</label>
                     <FileDrop />
                     <button type="submit">Upload</button>
                 </form>

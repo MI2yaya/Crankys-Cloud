@@ -8,24 +8,23 @@ import { S3Client, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s
 import { getEnv } from "astro/env/runtime";
 
 export const POST: APIRoute = async (ctx): Promise<Response> => {
-  const session = await getSession(ctx);
   const _difficulty = ctx.request.headers.get("difficulty");
   const difficulty = _difficulty ? JSON.parse(_difficulty) : undefined;
   const meta = JSON.parse(ctx.request.headers.get("meta")!);
   const zipName = ctx.request.headers.get('zipName')!;
+  // whether the chart is from Early Access or the beta
+  const version = ctx.request.headers.get('version')!;
+
+  // if uploading from the bot
+  const botPassword = ctx.request.headers.get('botPassword');
+  const userID = ctx.request.headers.get("userID");
+  // For importing from the old database
+  const discordID = ctx.request.headers.get("discordID")?? undefined;
+
+  // if uploading from the website
+  const session = await getSession(ctx);
 
   const fileData = await ctx.request.arrayBuffer();
-
-
-  if (!session?.user?.id) {
-    return new Response("", {
-      status: 400,
-      statusText: "No User ID found"
-    })
-  }
-
-  const Bucket = "charts-raging-kerosene-untie-unless-duvet-hundredth";
-  const Key = session.user.id! + "_" + zipName + ".zip";
 
   const createClient = () => {
     if (getEnv("S3_BUCKET") == "minio") {
@@ -46,10 +45,51 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
           accessKeyId: getEnv("B2_KEY_ID")!,
           secretAccessKey: getEnv("B2_APP_KEY")!
         },
-        forcePathStyle: true 
+        forcePathStyle: true
       });
     }
   }
+  const db = await getDatabase(ctx);
+
+  const Bucket = "charts-raging-kerosene-untie-unless-duvet-hundredth";
+  let Key;
+  let uploadedByBot = false;
+
+  if (botPassword) {
+    if (botPassword == getEnv("BOT_PASSWORD")) {
+      if (userID && await db.query.users.findFirst({
+        where: eq(users.id, userID),
+      }).execute())
+        uploadedByBot = true;
+      Key = userID + "_" + zipName;
+    } else if (!userID) {
+      return new Response("", {
+        status: 401,
+        statusText: "Please include the header \"userID\" with your request"
+      })
+    } else {
+      return new Response("", {
+        status: 403,
+        statusText: "User with id " + userID + " not found!"
+      })
+    }
+  } else {
+    if (!session?.user?.id) {
+      return new Response("", {
+        status: 401,
+        statusText: "No User ID or Session found"
+      })
+    }
+    Key = session.user.id + "_" + zipName;
+  }
+
+  if (!Key) {
+    return new Response("", {
+      status: 500,
+      statusText: "Couldn't assign a Key to this file. This shouldn't ever be possible. ???",
+    })
+  }
+
   const client = createClient();
 
   if (!client) {
@@ -94,19 +134,26 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
   }
 
 
-  const db = await getDatabase(ctx);
+  const values = {
+
+    title: meta.songName as string,
+    author: meta.artist as string,
+    description: meta.description as string,
+    mapper: meta.charter as string,
+    discordID: discordID,
+    difficulty: difficulty ? JSON.stringify(difficulty) : undefined,
+    // image upload will be a separated endpoint
+    image: undefined,
+    link: Key,
+    version,
+    uploader: userID ? userID as string : session?.user?.id as string,
+    uploadedByBot: uploadedByBot ? "true" : "false",
+  };
+  console.log(values);
+
   await db
     .insert(tracks)
-    .values({
-      title: meta.songName as string,
-      author: meta.artist as string,
-      description: meta.description as string,
-      mapper: session?.user?.id,
-      difficulty: difficulty ? JSON.stringify(difficulty) : undefined,
-      // image upload will be a separated endpoint
-      image: undefined,
-      link: Key,
-    })
+    .values(values)
     .returning()
     .execute();
 

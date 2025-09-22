@@ -13,8 +13,9 @@ export interface Props {
         id: string;
         score: number;
         link: string;
-
-        mapperId: string;
+        version: string;
+        uploader: string;
+        uploadedByBot: string;
     };
 
     // Useful for when in dashboard
@@ -29,7 +30,19 @@ export interface Props {
 }
 
 const {
-    data: { title, author, mapper, difficulty, image, id, score, link, mapperId },
+    data: {
+        title,
+        author,
+        mapper,
+        difficulty,
+        image,
+        id,
+        score,
+        link,
+        version,
+        uploader,
+        uploadedByBot,
+    },
     showMapper = true,
     isOwned = false,
 } = Astro.props;
@@ -60,13 +73,7 @@ const difficulties = _difficulty.map((diff) => {
         <div class="contentInner">
             <h2><a href={`/track/${id}`}>{title}</a></h2>
             <p>by: {author}</p>
-            {
-                showMapper && (
-                    <p>
-                        mapper: <a href={`/user/${mapperId}`}>{mapper}</a>
-                    </p>
-                )
-            }
+            {showMapper && <p>mapper: {mapper}</p>}
             <p>
                 {difficulties?.length! > 1 ? "Difficulties: " : "Difficulty: "}
                 {

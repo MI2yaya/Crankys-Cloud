@@ -103,21 +103,25 @@ export const authenticators = sqliteTable(
 export const tracks = sqliteTable("tracks", {
     id: text("id")
         .primaryKey()
-        .$defaultFn(() => nanoid()),
+        .$defaultFn(nanoid),
     title: text("title").notNull(),
     // Name of the song artist
     author: text("author"),
     description: text("description"),
     difficulty: text("difficulty"),
-    mapper: text("userId")
-        .notNull()
-        // TODO: do we delete songs if a user deletes themselves?
-        .references(() => users.id, { onDelete: "cascade" }),
+    mapper: text("mapper").notNull(),
     // Field for imported data: discord users that log in should automatically own their songs
     discordID: text("discordID"),
     image: text("image"),
     // (download) link
     link: text("link"),
+    // Is this for the beta or early access?
+    version: text("version").notNull(),
+    uploader: text("userID")
+        .notNull()
+        // TODO: do we delete songs if a user deletes themselves?
+        .references(() => users.id, { onDelete: "cascade" }),
+    uploadedByBot: text("uploadedByBot").default("false"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

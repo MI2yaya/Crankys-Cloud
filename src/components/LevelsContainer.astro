@@ -20,7 +20,7 @@ const { page, root, session, inDashboard, inTitle } = Astro.props;
 const { data, error } = await Astro.callAction(actions.getCards, {
     page,
     // Grab only the charts by the user if on the dashboard
-    mapper: inDashboard ? session?.user?.id! : undefined,
+    uploader: inDashboard ? session?.user?.id! : undefined,
     inTitle,
 });
 

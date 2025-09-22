@@ -17,13 +17,10 @@ if (!id) return new Response(null, { status: 404 });
 
 const song = await db.query.tracks.findFirst({
     where: eq(tracks.id, id),
-    with: {
-        mapper: true,
-    },
 });
 
 let hideManage = true;
-if (song?.mapper.id == session?.user?.id) {
+if (song?.uploader == session?.user?.id) {
     hideManage = false;
 }
 
@@ -47,7 +44,7 @@ if (!song) return new Response(null, { status: 404 });
                 <h1 class="left title">{song.title}</h1>
                 <p class="right artist">Artist: {song.author}</p>
                 <p class="right mapper">
-                    Mapper: <a href={"/user/" + song.mapper.id}> {song.mapper.name}</a>
+                    Mapper: {song.mapper}
                 </p>
             </div>
             <p class="description">{song.description}</p>

@@ -17,11 +17,11 @@ export const server = {
             page: z.number().min(1),
             // search parameter: what mapper are we looking for?
             // (currently only used in the dashboard)
-            mapper: z.string().optional(),
+            uploader: z.string().optional(),
             // search parameter: (case-insensitive) does the title have this?
             inTitle: z.string().optional(),
         }),
-        handler: async ({ page, mapper, inTitle }, ctx) => {
+        handler: async ({ page, uploader, inTitle }, ctx) => {
             // TODO: tracksPerPage customization?
             const tracksPerPage = 20;
 
@@ -30,8 +30,8 @@ export const server = {
             let where: SQLWrapper[] = [];
             // This is here for the dashboard right now,
             // though could be used for filtering by mapper in the future
-            if (mapper) {
-                where.push(eq(tracks.mapper, mapper!));
+            if (uploader) {
+                where.push(eq(tracks.uploader, uploader!));
             }
 
             if (inTitle !== undefined && inTitle !== "") {
@@ -48,7 +48,7 @@ export const server = {
             const paginatedTracks = await db.query.tracks.findMany({
                 where: and(...where),
                 with: {
-                    mapper: true,
+                    
                     // TODO: i just want to count these lists
                     downvotes: true,
                     upvotes: true,
@@ -61,10 +61,14 @@ export const server = {
 
             const finalTracks: CardProps["data"][] = paginatedTracks
                 .slice(0, tracksPerPage)
+                .map((track) => {
+                    console.log(track)
+                    return track
+                })
                 .map((track) => ({
                     score: track.upvotes.length - track.downvotes.length,
                     title: track.title,
-                    mapper: track.mapper.name ?? "(Unnamed)",
+                    mapper: track.mapper,
                     // TODO: default difficulty? ! typeassertion is bad here
                     difficulty: track.difficulty!,
                     id: track.id,
@@ -73,7 +77,9 @@ export const server = {
                     // TODO: we want to notNull this
                     link: track.link!,
 
-                    mapperId: track.mapper.id,
+                    version: track.version,
+                    uploader: track.uploader,
+                    uploadedByBot: track.uploadedByBot,
                 }));
 
             return {
