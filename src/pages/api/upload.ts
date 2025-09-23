@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import JSZip from "jszip";
 import { getDatabase } from "../../db/connection";
-import { tracks, users } from "../../db/schema";
+import { accounts, tracks, users } from "../../db/schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "auth-astro/server";
 import { S3Client, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3"
@@ -17,15 +17,13 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
 
   // if uploading from the bot
   const botPassword = ctx.request.headers.get('botPassword');
-  const userID = ctx.request.headers.get("userID");
-  // For importing from the old database
-  const discordID = ctx.request.headers.get("discordID")?? undefined;
 
   // if uploading from the website
   const session = await getSession(ctx);
 
   const fileData = await ctx.request.arrayBuffer();
 
+  let userId;
   const createClient = () => {
     if (getEnv("S3_BUCKET") == "minio") {
       return new S3Client({
@@ -54,23 +52,34 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
   const Bucket = "charts-raging-kerosene-untie-unless-duvet-hundredth";
   let Key;
   let uploadedByBot = false;
+  const discordId = ctx.request.headers.get("discordID") ?? undefined;
 
   if (botPassword) {
+    const user = await db.query.accounts.findFirst({
+      where: eq(accounts.providerAccountId, discordId as string),
+    })
+
     if (botPassword == getEnv("BOT_PASSWORD")) {
-      if (userID && await db.query.users.findFirst({
-        where: eq(users.id, userID),
-      }).execute())
+      if (user) {
+        userId = user.id;
         uploadedByBot = true;
-      Key = userID + "_" + zipName;
-    } else if (!userID) {
-      return new Response("", {
-        status: 401,
-        statusText: "Please include the header \"userID\" with your request"
-      })
+        Key = userId + "_" + zipName;
+
+      } else if (!user) {
+        return new Response("", {
+          status: 401,
+          statusText: "Please include the header \"discordID\" with your request"
+        })
+      } else {
+        return new Response("", {
+          status: 403,
+          statusText: "User with discord id " + discordId + " not found!"
+        })
+      }
     } else {
       return new Response("", {
-        status: 403,
-        statusText: "User with id " + userID + " not found!"
+        status: 401,
+        statusText: "Incorrect password"
       })
     }
   } else {
@@ -81,6 +90,7 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
       })
     }
     Key = session.user.id + "_" + zipName;
+    userId = session.user.id;
   }
 
   if (!Key) {
@@ -135,27 +145,33 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
 
 
   const values = {
-
     title: meta.songName as string,
     author: meta.artist as string,
     description: meta.description as string,
     mapper: meta.charter as string,
-    discordID: discordID,
+    discordID: discordId,
     difficulty: difficulty ? JSON.stringify(difficulty) : undefined,
     // image upload will be a separated endpoint
     image: undefined,
     link: Key,
     version,
-    uploader: userID ? userID as string : session?.user?.id as string,
+    uploader: userId as string,
     uploadedByBot: uploadedByBot ? "true" : "false",
   };
   console.log(values);
 
-  await db
-    .insert(tracks)
-    .values(values)
-    .returning()
-    .execute();
+  try {
+    await db
+      .insert(tracks)
+      .values(values)
+      .returning()
+      .execute();
+  } catch (err) {
+    return new Response("", {
+      status: 500,
+      statusText: err as string,
+    })
+  }
 
   return new Response("", {
     status: 200,
