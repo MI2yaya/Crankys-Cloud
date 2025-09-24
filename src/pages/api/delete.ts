@@ -10,6 +10,10 @@ export const DELETE: APIRoute = async (ctx): Promise<Response> => {
     const trackID = ctx.request.headers.get("trackID")! as string;
     const session = await getSession(ctx);
 
+    console.log(await db.query.tracks.findFirst({
+        where: eq(tracks.id, trackID)
+    }));
+
     const track = await db.query.tracks
         .findFirst({
             where: eq(tracks.id, trackID),
@@ -25,7 +29,7 @@ export const DELETE: APIRoute = async (ctx): Promise<Response> => {
         });
     }
 
-    if (track?.mapper.id != session?.user?.id) {
+    if (track?.uploader != session?.user?.id) {
         return new Response("Not Allowed", {
             status: 400,
         });

@@ -124,7 +124,6 @@ class UploadSection extends HTMLElement {
         from: "AUTO",
         type: "string",
       });
-      console.log(__meta);
 
       const headers = new Headers();
       headers.append('Content-Type', 'application/octet-stream')

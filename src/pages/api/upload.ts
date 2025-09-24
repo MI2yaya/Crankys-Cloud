@@ -158,7 +158,6 @@ export const POST: APIRoute = async (ctx): Promise<Response> => {
     uploader: userId as string,
     uploadedByBot: uploadedByBot ? "true" : "false",
   };
-  console.log(values);
 
   try {
     await db

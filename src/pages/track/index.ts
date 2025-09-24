@@ -2,7 +2,6 @@ class DeleteSection extends HTMLElement {
     constructor() {
         super();
 
-        console.log(this.dataset.id);
         const button: HTMLElement = document.querySelector("[data-delete]")!;
         button.addEventListener("click", async () => {
             await fetch("/api/delete", {

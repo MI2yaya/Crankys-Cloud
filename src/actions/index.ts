@@ -61,10 +61,6 @@ export const server = {
 
             const finalTracks: CardProps["data"][] = paginatedTracks
                 .slice(0, tracksPerPage)
-                .map((track) => {
-                    console.log(track)
-                    return track
-                })
                 .map((track) => ({
                     score: track.upvotes.length - track.downvotes.length,
                     title: track.title,
