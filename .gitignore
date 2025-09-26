@@ -36,3 +36,5 @@ src/worker.d.ts
 # minio
 minio
 /data
+website/data
+crankys-imgen/test.sh
