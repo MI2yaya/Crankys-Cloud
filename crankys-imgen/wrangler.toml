@@ -1,0 +1,6 @@
+name = "crankys-imgen"
+main = "build/index.js"
+compatibility_date = "2025-09-25"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release"
